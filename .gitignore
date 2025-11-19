@@ -1,27 +1,56 @@
-# Logs
-logs
+# Node modules
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Build output
+client/build/
+server/build/
+dist/
 *.log
+
+# Environment variables
+.env
+client/.env
+server/.env
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Cache
+.cache/
+client/.cache/
+server/.cache/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# Temporary files
+*.tmp
+*.temp
 
-# vscode
-.vscode
+# Coverage
+coverage/
+
+# Local environment folders
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
+
+# Logs and pids
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Optional: Ignore uploads folder
+uploads/
