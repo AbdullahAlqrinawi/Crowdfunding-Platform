@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { FunnelIcon } from '@heroicons/react/20/solid';
-import { useState, useEffect } from 'react';
+import { FunnelIcon } from "@heroicons/react/20/solid";
+import { useState, useEffect } from "react";
 
 export const Search = ({ onMobileFilterOpen, onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const timer = setTimeout(() => {

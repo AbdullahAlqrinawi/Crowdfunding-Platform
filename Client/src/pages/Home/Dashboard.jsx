@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Footer, Stats } from '../../components/landing';
@@ -85,9 +86,9 @@ export const Dashboard = () => {
     setFilters(newFilters);
   };
 
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-  };
+ const handleSearch = useCallback((query) => {
+  setSearchQuery(query);
+}, []);
 
   if (!user) {
     return (

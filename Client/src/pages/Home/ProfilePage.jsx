@@ -4,14 +4,14 @@ import { jwtDecode } from "jwt-decode";
 import { Tabs, Tab } from "../../components/project/Tabs";
 import CampaignCard from "../../components/landing/CampaignCard";
 import { FaLinkedin } from "react-icons/fa";
-import { FaXTwitter, FaPen } from "react-icons/fa6";
+import { FaXTwitter, FaPen, FaUsers } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import { Footer } from "../../components/landing";
 import Navbar from "../../components/project/Navbar";
 import { Dialog } from "@headlessui/react";
 import styles from "../../style";
-import { useUser } from "../../components/project/UserContext";
 import { useSearchParams, useNavigate, useParams } from "react-router-dom";
+import { useUser } from "../../components/project/UserContext";
 
 const ProfilePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -49,6 +49,8 @@ const ProfilePage = () => {
     location: "",
     categoryMain: "",
     categoryOptional: "",
+    type: "",
+    status: "",
   });
 
   const fileInputRef = useRef();
@@ -61,25 +63,76 @@ const ProfilePage = () => {
       const token = getToken();
       if (!token) return null;
       const decoded = jwtDecode(token);
-      return decoded.id;
+      console.log("Decoded token:", decoded); // للت Debug
+      return decoded.id || decoded.userId || decoded._id; // جرب كل الاحتمالات
     } catch (error) {
       console.error("Invalid token", error);
       return null;
     }
   };
 
-  const handleViewDonors = async (projectId, projectTitle) => {
-    try {
-      setSelectedProjectTitle(projectTitle);
-      const response = await axios.get(
-        `http://localhost:5000/api/donations/project/${projectId}/donors`
-      );
-      setDonors(response.data.donors);
+
+
+  const handleDonorClick = (donor) => {
+  setIsDonorModalOpen(false);
+
+  if (!donor) {
+    console.error("Donor object is undefined");
+    return;
+  }
+
+  // البحث عن المعرف بأي اسم محتمل
+  const donorId = donor._id || donor.donor_id || donor.id || donor.userId;
+  
+  if (!donorId) {
+    console.error("No valid donor ID found in donor object:", donor);
+    return;
+  }
+
+  console.log("Navigating to donor profile:", donorId);
+  console.log("Full donor data:", donor);
+
+  navigate(`/profile-page/${donorId}`);
+};
+
+const handleViewDonors = async (projectId, projectTitle) => {
+  try {
+    setSelectedProjectTitle(projectTitle);
+    const response = await axios.get(
+      `http://localhost:5000/api/donations/project/${projectId}/donors`
+    );
+
+    console.log("Full API response:", response.data);
+
+    if (response.data && response.data.donors) {
+      console.log("Donors data received:", response.data.donors);
+      
+      // معالجة البيانات لتوحيد حقل المعرف
+      const processedDonors = response.data.donors.map((donor, index) => {
+        console.log(`Donor ${index}:`, donor);
+        
+        // إذا كان donor_id موجوداً ولكن _id غير موجود، انسخ donor_id إلى _id
+        if (donor.donor_id && !donor._id) {
+          donor._id = donor.donor_id;
+        }
+        
+        return donor;
+      });
+
+      setDonors(processedDonors);
       setIsDonorModalOpen(true);
-    } catch (error) {
-      console.error("Error fetching donors:", error);
+    } else {
+      console.error("No donors data received or invalid structure");
+      setDonors([]);
+      setIsDonorModalOpen(true);
     }
-  };
+  } catch (error) {
+    console.error("Error fetching donors:", error);
+    console.error("Error details:", error.response?.data);
+    setDonors([]);
+    setIsDonorModalOpen(true);
+  }
+};
 
   const currentUserId = getUserIdFromToken();
   const isOwnProfile = !profileUserId || currentUserId === profileUserId;
@@ -130,6 +183,10 @@ const ProfilePage = () => {
       const token = getToken();
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
+      console.log(
+        `Fetching projects for tab: ${activeTab}, user: ${userIdToFetch}`
+      );
+
       if (activeTab === "Funding") {
         endpoint = `http://localhost:5000/api/donations/user/projects/${userIdToFetch}`;
       } else if (
@@ -144,19 +201,26 @@ const ProfilePage = () => {
       }
 
       const response = await axios.get(endpoint, { headers });
+      console.log(`API Response for ${activeTab}:`, response.data);
 
+      let projects = [];
       if (activeTab === "Funding") {
-        return response.data.projects || [];
+        projects = response.data.projects || response.data || [];
       } else if (
         activeTab === "My Campaigns" ||
         activeTab.includes("Campaigns")
       ) {
-        return response.data.projects || [];
+        projects = response.data.projects || response.data || [];
       } else if (activeTab === "Likes") {
-        return response.data.likedProjects || response.data.projects || [];
+        projects =
+          response.data.likedProjects ||
+          response.data.projects ||
+          response.data ||
+          [];
       }
 
-      return [];
+      console.log(`Processed ${projects.length} projects for ${activeTab}`);
+      return projects;
     } catch (error) {
       console.error(`Error fetching ${activeTab} projects:`, error);
 
@@ -301,6 +365,8 @@ const ProfilePage = () => {
       location: project.location || "",
       categoryMain: project.main_category || "",
       categoryOptional: project.optional_category || "",
+      type: project.type || "",
+      status: project.status || "",
       image: null,
     });
     setIsProjectEditOpen(true);
@@ -326,6 +392,8 @@ const ProfilePage = () => {
       data.append("location", projectFormData.location);
       data.append("categoryMain", projectFormData.categoryMain);
       data.append("categoryOptional", projectFormData.categoryOptional);
+      data.append("type", projectFormData.type);
+      data.append("status", projectFormData.status);
 
       if (projectFormData.image) {
         data.append("image", projectFormData.image);
@@ -359,9 +427,50 @@ const ProfilePage = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-40 text-white">
-        <span className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></span>
-      </div>
+      <>
+        <Navbar activeTab={activeTab} />
+        <div className="bg-primary min-h-screen text-white p-6">
+          <div className="max-w-6xl mx-auto">
+            {/* Header Skeleton */}
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8">
+              <div className="relative">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 animate-pulse border-2 border-zinc-600" />
+              </div>
+              <div className="flex-1 w-full space-y-3">
+                <div className="h-8 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 rounded-lg w-48 animate-pulse" />
+                <div className="h-4 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 rounded w-full max-w-md animate-pulse" />
+                <div className="h-4 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 rounded w-3/4 max-w-sm animate-pulse" />
+              </div>
+            </div>
+
+            {/* Tabs Skeleton */}
+            <div className="mb-6 flex justify-center md:justify-start gap-4">
+              {[1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="h-10 w-32 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 rounded-lg animate-pulse"
+                />
+              ))}
+            </div>
+
+            {/* Projects Grid Skeleton */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[1, 2, 3, 4, 5, 6].map((item) => (
+                <div
+                  key={item}
+                  className="bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700"
+                >
+                  <div className="h-48 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 animate-pulse" />
+                  <div className="p-4 space-y-3">
+                    <div className="h-6 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 rounded animate-pulse" />
+                    <div className="h-4 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 rounded w-3/4 animate-pulse" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </>
     );
   }
 
@@ -430,22 +539,21 @@ const ProfilePage = () => {
 
           {/* Projects */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {projects[activeTab]?.length === 0 ? (
-              <p className="col-span-full text-center text-zinc-400">
-                {isOwnProfile
-                  ? `No ${activeTab.toLowerCase()} yet.`
-                  : `No campaigns yet.`}
-              </p>
-            ) : (
-              projects[activeTab]?.map((proj, idx) => (
+            {projects[activeTab] && projects[activeTab].length > 0 ? (
+              projects[activeTab].map((proj, idx) => (
                 <div key={idx} className="relative">
                   <CampaignCard
+                    id={proj._id}
                     owner={proj.owner_id?.username || displayedUser.username}
                     title={proj.title}
-                    image={`http://localhost:5000/${proj.image.replace(
-                      /\\/g,
-                      "/"
-                    )}`}
+                    image={
+                      proj.image
+                        ? `http://localhost:5000/${proj.image.replace(
+                            /\\/g,
+                            "/"
+                          )}`
+                        : "/default-project.png"
+                    }
                     target={proj.target}
                     amountCollected={proj.amount_raised}
                     deadline={proj.end_date}
@@ -455,26 +563,31 @@ const ProfilePage = () => {
                         : "/default-avatar.png"
                     }
                   />
-                  {isOwnProfile &&
-                    (activeTab === "My Campaigns" ||
-                      activeTab.includes("Campaigns")) && (
-                      <div className="absolute top-2 right-2 flex gap-2">
-                        <button
-                          onClick={() => handleEditProject(proj)}
-                          className="bg-zinc-700 p-2 rounded-full hover:bg-zinc-600 transition"
-                        >
-                          <FaEdit size={16} />
-                        </button>
-                        <button
-                          onClick={() => handleViewDonors(proj._id, proj.title)}
-                          className="bg-indigo-600 p-2 rounded-full hover:bg-indigo-500 transition text-sm"
-                        >
-                          👥
-                        </button>
-                      </div>
-                    )}
+                  {isOwnProfile && activeTab === "My Campaigns" && (
+                    <div className="absolute top-2 right-2 flex gap-2">
+                      <button
+                        onClick={() => handleEditProject(proj)}
+                        className="bg-zinc-700 p-2 rounded-full hover:bg-zinc-600 transition"
+                      >
+                        <FaEdit size={16} />
+                      </button>
+                      <button
+                        onClick={() => handleViewDonors(proj._id, proj.title)}
+                        className="bg-indigo-600 p-2 rounded-full hover:bg-indigo-500 transition flex items-center justify-center"
+                        style={{ width: "40px", height: "40px" }}
+                      >
+                        <FaUsers size={16} />
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))
+            ) : (
+              <p className="col-span-full text-center text-zinc-400">
+                {isOwnProfile
+                  ? `No ${activeTab.toLowerCase()} yet.`
+                  : `No campaigns yet.`}
+              </p>
             )}
           </div>
         </div>
@@ -651,22 +764,69 @@ const ProfilePage = () => {
                     className="w-full p-2 rounded bg-zinc-800 text-white"
                     rows="4"
                   />
-                  <input
-                    type="text"
+
+                  <select
                     name="location"
-                    placeholder="Location"
                     value={projectFormData.location}
                     onChange={handleProjectChange}
                     className="w-full p-2 rounded bg-zinc-800 text-white"
-                  />
-                  <input
-                    type="text"
+                  >
+                    <option value="">Select Location</option>
+                    <option value="Jordan">Jordan</option>
+                    <option value="USA">USA</option>
+                    <option value="UK">UK</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Canada">Canada</option>
+                    <option value="India">India</option>
+                    <option value="Australia">Australia</option>
+                    <option value="France">France</option>
+                  </select>
+
+                  <select
                     name="categoryMain"
-                    placeholder="Main Category"
                     value={projectFormData.categoryMain}
                     onChange={handleProjectChange}
                     className="w-full p-2 rounded bg-zinc-800 text-white"
-                  />
+                  >
+                    <option value="">Select Main Category</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Education">Education</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Art">Art</option>
+                    <option value="Environment">Environment</option>
+                    <option value="Gaming">Gaming</option>
+                    <option value="Fashion">Fashion</option>
+                    <option value="Real Estate">Real Estate</option>
+                    <option value="Food">Food</option>
+                  </select>
+
+                  <select
+                    name="type"
+                    value={projectFormData.type}
+                    onChange={handleProjectChange}
+                    className="w-full p-2 rounded bg-zinc-800 text-white"
+                  >
+                    <option value="">Select Type</option>
+                    <option value="Individual">Individual</option>
+                    <option value="Team">Team</option>
+                    <option value="Organization">Organization</option>
+                    <option value="Non-profit">Non-profit</option>
+                    <option value="Commercial">Commercial</option>
+                  </select>
+
+                  <select
+                    name="status"
+                    value={projectFormData.status}
+                    onChange={handleProjectChange}
+                    className="w-full p-2 rounded bg-zinc-800 text-white"
+                  >
+                    <option value="">Select Status</option>
+                    <option value="Upcoming">Upcoming</option>
+                    <option value="Active">Active</option>
+                    <option value="Ended">Ended</option>
+                  </select>
+
                   <input
                     type="text"
                     name="categoryOptional"
@@ -696,55 +856,62 @@ const ProfilePage = () => {
               </Dialog.Panel>
             </div>
           </Dialog>
-          {/* View Donors Modal */}
-<Dialog
-  open={isDonorModalOpen}
-  onClose={() => setIsDonorModalOpen(false)}
-  className="relative z-50"
->
-  <div className="fixed inset-0 bg-black/60" aria-hidden="true" />
-  <div className="fixed inset-0 flex items-center justify-center p-4">
-    <Dialog.Panel className="w-full max-w-md bg-zinc-900 p-6 rounded-xl shadow-xl border border-zinc-700">
-      <Dialog.Title className="text-xl font-bold mb-4 text-white">
-        Donors for {selectedProjectTitle}
-      </Dialog.Title>
 
-      {donors.length === 0 ? (
-        <p className="text-zinc-400 text-center">No donors yet.</p>
-      ) : (
-        <ul className="space-y-3 max-h-80 overflow-y-auto">
-          {donors.map((donor, idx) => (
-            <li key={idx} className="flex items-center gap-3 bg-zinc-800 p-3 rounded-lg">
-              <img
-                src={
-                  donor.profile_pic
-                    ? `http://localhost:5000/uploads/${donor.profile_pic}`
-                    : "/default-avatar.png"
-                }
-                alt="donor"
-                className="w-10 h-10 rounded-full object-cover"
-              />
-              <div className="flex-1">
-                <p className="font-semibold text-white">{donor.username}</p>
-                <p className="text-zinc-400 text-sm">{donor.amount} ETH</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+          <Dialog
+            open={isDonorModalOpen}
+            onClose={() => setIsDonorModalOpen(false)}
+            className="relative z-50"
+          >
+            <div className="fixed inset-0 bg-black/60" aria-hidden="true" />
+            <div className="fixed inset-0 flex items-center justify-center p-4">
+              <Dialog.Panel className="w-full max-w-md bg-zinc-900 p-6 rounded-xl shadow-xl border border-zinc-700">
+                <Dialog.Title className="text-xl font-bold mb-4 text-white">
+                  Donors for {selectedProjectTitle}
+                </Dialog.Title>
 
-      <div className="flex justify-end mt-4">
-        <button
-          onClick={() => setIsDonorModalOpen(false)}
-          className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg text-white"
-        >
-          Close
-        </button>
-      </div>
-    </Dialog.Panel>
-  </div>
-</Dialog>
+                {donors.length === 0 ? (
+                  <p className="text-zinc-400 text-center">No donors yet.</p>
+                ) : (
+                  <ul className="space-y-3 max-h-80 overflow-y-auto">
+                    {donors.map((donor, idx) => (
+                      <li
+                        key={idx}
+                        onClick={() => handleDonorClick(donor)} // تمرير donor كامل بدلاً من donor._id فقط
+                        className="flex items-center gap-3 bg-zinc-800 p-3 rounded-lg cursor-pointer hover:bg-zinc-700 transition-colors"
+                      >
+                        <img
+                          src={
+                            donor.profile_pic
+                              ? `http://localhost:5000/uploads/${donor.profile_pic}`
+                              : "/default-avatar.png"
+                          }
+                          alt="donor"
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                        <div className="flex-1">
+                          <p className="font-semibold text-white">
+                            {donor.username || "Anonymous"}
+                          </p>
+                          <p className="text-zinc-400 text-sm">
+                            {donor.amount} ETH
+                          </p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
+                <div className="flex justify-end mt-4">
+                  <button
+                    onClick={() => setIsDonorModalOpen(false)}
+                    className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg text-white"
+                  >
+                    Close
+                  </button>
+                </div>
+              </Dialog.Panel>
+            </div>
+          </Dialog>
         </div>
       </div>
     </>

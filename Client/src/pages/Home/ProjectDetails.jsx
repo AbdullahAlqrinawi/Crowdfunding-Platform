@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useUser } from "../../components/project/UserContext";
 import {
   HeartIcon,
@@ -21,6 +20,7 @@ export default function ProjectDetails() {
   const { id } = useParams();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [dataReady, setDataReady] = useState(false); // ✨ حالة جديدة للتأكد من جاهزية كل البيانات
 
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
@@ -28,7 +28,6 @@ export default function ProjectDetails() {
   const [newComment, setNewComment] = useState("");
   const [showShareModal, setShowShareModal] = useState(false);
   const inputRef = useRef(null);
-  const token = localStorage.getItem("token");
 
   const [selectedReward, setSelectedReward] = useState(null);
   const [showDonationModal, setShowDonationModal] = useState(false);
@@ -47,15 +46,17 @@ export default function ProjectDetails() {
 
   useEffect(() => {
     const fetchProjectData = async () => {
+      setLoading(true);
+      setDataReady(false); // ✨ إعادة تعيين حالة البيانات
+      
       try {
         const token = localStorage.getItem("token");
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
+        // جلب بيانات المشروع
         const projectRes = await fetch(
           `http://localhost:5000/api/projects/${id}`,
-          {
-            headers: headers,
-          }
+          { headers }
         );
 
         if (!projectRes.ok) {
@@ -68,8 +69,19 @@ export default function ProjectDetails() {
           throw new Error(projectData.message || "Project not found");
         }
 
+        // ✨ انتظار تحميل صورة البروفايل قبل عرض المشروع
+        if (projectData.project.owner_id?.profile_pic) {
+          await new Promise((resolve) => {
+            const img = new Image();
+            img.onload = resolve;
+            img.onerror = resolve; // continue even if image fails
+            img.src = `http://localhost:5000/uploads/${projectData.project.owner_id.profile_pic}`;
+          });
+        }
+
         setProject(projectData.project);
 
+        // جلب الإعجابات والتعليقات بالتوازي
         const [likesRes, commentsRes] = await Promise.all([
           fetch(`http://localhost:5000/api/likes/project/${id}`),
           fetch(`http://localhost:5000/api/comments/project/${id}`),
@@ -82,6 +94,7 @@ export default function ProjectDetails() {
           setLikeCount(likesData.likes?.length || 0);
         }
 
+        // فحص إعجاب المستخدم
         if (token) {
           try {
             const userLikeRes = await fetch(
@@ -105,6 +118,7 @@ export default function ProjectDetails() {
           }
         }
 
+        // تنسيق التعليقات
         if (!commentsData.error) {
           const formattedComments =
             commentsData.comments?.map((comment) => ({
@@ -118,9 +132,14 @@ export default function ProjectDetails() {
             })) || [];
           setComments(formattedComments);
         }
+
+        // ✨ تأخير صغير للتأكد من تحميل كل شيء
+        await new Promise(resolve => setTimeout(resolve, 300));
+        setDataReady(true); // ✨ البيانات جاهزة الآن
+        
       } catch (err) {
         console.error("Error fetching project data:", err);
-        setProject(null); 
+        setProject(null);
       } finally {
         setLoading(false);
       }
@@ -128,6 +147,7 @@ export default function ProjectDetails() {
 
     fetchProjectData();
   }, [id]);
+
   useEffect(() => {
     const handleStorageChange = () => {
       const currentToken = localStorage.getItem("token");
@@ -147,6 +167,7 @@ export default function ProjectDetails() {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
+
   const handleLike = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -207,9 +228,10 @@ export default function ProjectDetails() {
       }
     }
   };
+
   const getOwnerInfo = () => {
     if (!project || !project.owner_id)
-      return { name: "Unknown", isCurrentUser: false };
+      return { name: "Unknown", isCurrentUser: false, profilePic: "/default-avatar.png" };
 
     const isCurrentUser =
       currentUser && currentUser._id === project.owner_id._id;
@@ -276,11 +298,13 @@ export default function ProjectDetails() {
       alert("Network error. Please try again.");
     }
   };
+
   useEffect(() => {
     return () => {
       setLiked(false);
       setLikeCount(0);
       setComments([]);
+      setDataReady(false);
     };
   }, [id]);
 
@@ -314,11 +338,114 @@ export default function ProjectDetails() {
     inputRef.current?.focus();
   };
 
-  if (loading)
-    return <div className="text-white text-center p-10">Loading...</div>;
+  if (loading || !dataReady) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-primary text-white">
+          <div className="max-w-7xl mx-auto p-6 space-y-12">
+            {/* Image Skeleton with Shimmer */}
+            <div className="relative overflow-hidden">
+              <div className="w-full h-80 md:h-[500px] bg-gray-800 rounded-lg relative overflow-hidden">
+                <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-gray-700/50 to-transparent" />
+              </div>
+              
+              {/* Owner Badge Skeleton */}
+              <div className="absolute bottom-4 left-4 flex items-center gap-3 bg-gray-800/80 backdrop-blur-md px-4 py-2 rounded-full">
+                <div className="h-10 w-10 rounded-full bg-gray-700 relative overflow-hidden">
+                  <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-gray-600/50 to-transparent" />
+                </div>
+                <div className="space-y-2">
+                  <div className="h-4 w-24 bg-gray-700 rounded relative overflow-hidden">
+                    <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-gray-600/50 to-transparent" />
+                  </div>
+                  <div className="h-3 w-32 bg-gray-700 rounded relative overflow-hidden">
+                    <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-gray-600/50 to-transparent" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Title Skeleton */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div className="h-10 bg-gray-800 rounded-lg w-64 relative overflow-hidden">
+                <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-gray-700/50 to-transparent" />
+              </div>
+              <div className="flex items-center gap-4">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="h-12 w-12 bg-gray-800 rounded-full relative overflow-hidden">
+                    <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-gray-700/50 to-transparent" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Description Skeleton */}
+            <div className="bg-gray-800/50 border-l-4 border-purple-500 p-4 rounded-xl">
+              <div className="space-y-2">
+                <div className="h-4 bg-gray-700 rounded w-full relative overflow-hidden">
+                  <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-gray-600/50 to-transparent" />
+                </div>
+                <div className="h-4 bg-gray-700 rounded w-5/6 relative overflow-hidden">
+                  <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-gray-600/50 to-transparent" />
+                </div>
+              </div>
+            </div>
+
+            {/* Rewards Skeleton */}
+            <div className="space-y-8">
+              <div className="h-8 bg-gray-800 rounded-lg w-32 relative overflow-hidden">
+                <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-gray-700/50 to-transparent" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3].map((item) => (
+                  <div key={item} className="border border-gray-700 rounded-lg p-6 bg-gray-800">
+                    <div className="space-y-4">
+                      <div className="h-6 bg-gray-700 rounded relative overflow-hidden">
+                        <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-gray-600/50 to-transparent" />
+                      </div>
+                      <div className="h-4 bg-gray-700 rounded w-3/4 relative overflow-hidden">
+                        <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-gray-600/50 to-transparent" />
+                      </div>
+                      <div className="flex justify-between items-center pt-4">
+                        <div className="h-6 bg-gray-700 rounded w-20 relative overflow-hidden">
+                          <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-gray-600/50 to-transparent" />
+                        </div>
+                        <div className="h-10 bg-gray-700 rounded w-24 relative overflow-hidden">
+                          <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-gray-600/50 to-transparent" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Add shimmer animation to global styles */}
+        <style jsx global>{`
+          @keyframes shimmer {
+            100% {
+              transform: translateX(100%);
+            }
+          }
+        `}</style>
+      </>
+    );
+  }
+
   if (!project)
     return (
-      <div className="text-red-400 text-center p-10">Project not found</div>
+      <>
+        <Navbar />
+        <div className="text-red-400 text-center p-10 min-h-screen flex items-center justify-center bg-primary">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold mb-2">Project not found</h2>
+            <p className="text-gray-400">The project you're looking for doesn't exist.</p>
+          </div>
+        </div>
+      </>
     );
 
   return (
@@ -331,6 +458,7 @@ export default function ProjectDetails() {
               src={`http://localhost:5000/${project.image.replace(/\\/g, "/")}`}
               alt={project.title}
               className="w-full h-80 md:h-[500px] object-cover rounded-lg shadow-lg"
+              loading="eager"
             />
             <div
               className="absolute bottom-4 left-4 flex items-center gap-3 bg-gray-800/80 backdrop-blur-md px-4 py-2 rounded-full shadow-md cursor-pointer hover:bg-gray-700/80 transition"
@@ -340,6 +468,7 @@ export default function ProjectDetails() {
                 src={getOwnerInfo().profilePic}
                 alt="Owner"
                 className="h-10 w-10 rounded-full object-cover border-2 border-primary"
+                loading="eager"
               />
               <div>
                 <h3 className="text-white font-semibold">
@@ -364,14 +493,14 @@ export default function ProjectDetails() {
                   <button
                     onClick={handleLike}
                     className={`
-      p-3 rounded-full transition-all duration-300 
-      flex items-center justify-center border
-      ${
-        liked
-          ? "bg-red-500/20 text-red-500 border-red-500/30 hover:bg-red-500/30"
-          : "bg-gray-700 text-gray-300 border-gray-600 hover:bg-gray-600 hover:text-white"
-      }
-    `}
+                      p-3 rounded-full transition-all duration-300 
+                      flex items-center justify-center border
+                      ${
+                        liked
+                          ? "bg-red-500/20 text-red-500 border-red-500/30 hover:bg-red-500/30"
+                          : "bg-gray-700 text-gray-300 border-gray-600 hover:bg-gray-600 hover:text-white"
+                      }
+                    `}
                   >
                     {liked ? (
                       <HeartIconSolid className="h-6 w-6 fill-current" />
@@ -381,9 +510,9 @@ export default function ProjectDetails() {
                   </button>
                   <span
                     className={`
-    text-lg font-semibold transition-colors duration-300
-    ${liked ? "text-red-400" : "text-gray-400"}
-  `}
+                      text-lg font-semibold transition-colors duration-300
+                      ${liked ? "text-red-400" : "text-gray-400"}
+                    `}
                   >
                     {likeCount}
                   </span>
@@ -421,6 +550,7 @@ export default function ProjectDetails() {
               ))}
             </div>
           </div>
+
           <div className="space-y-8">
             <h2 className="text-2xl font-bold">Rewards</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -487,6 +617,7 @@ export default function ProjectDetails() {
                     }
                     alt={comment.user.name}
                     className="h-10 w-10 rounded-full object-cover border-2 border-purple-500"
+                    loading="lazy"
                   />
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
@@ -535,60 +666,56 @@ export default function ProjectDetails() {
         projectLink={projectLink}
       />
 
-{showDonationModal && selectedReward && (
-  <RewardDonationModal
-    reward={selectedReward}
-    projectId={id}
-    projectWalletAddress={project.wallet_address}
-    onClose={() => {
-      setShowDonationModal(false);
-      setSelectedReward(null); 
-    }}
-    onSuccess={handleDonationSuccess}
-  />
-)}
+      {showDonationModal && selectedReward && (
+        <RewardDonationModal
+          reward={selectedReward}
+          projectId={id}
+          projectWalletAddress={project.wallet_address}
+          onClose={() => {
+            setShowDonationModal(false);
+            setSelectedReward(null);
+          }}
+          onSuccess={handleDonationSuccess}
+        />
+      )}
 
-     {donationSuccess && (
-  <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 animate-fade-in-up">
-    <div className="bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 text-white px-8 py-4 rounded-3xl shadow-2xl border border-white/10 backdrop-blur-md relative overflow-hidden">
-      {/* subtle glow effect */}
-      <div className="absolute inset-0 bg-white/10 opacity-20 blur-xl animate-pulse"></div>
+      {donationSuccess && (
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 animate-fade-in-up">
+          <div className="bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 text-white px-8 py-4 rounded-3xl shadow-2xl border border-white/10 backdrop-blur-md relative overflow-hidden">
+            <div className="absolute inset-0 bg-white/10 opacity-20 blur-xl animate-pulse"></div>
 
-      <div className="flex items-center gap-4 relative z-10">
-        {/* Animated checkmark icon */}
-        <div className="relative">
-          <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner">
-            <svg
-              className="w-6 h-6 text-white animate-bounce"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
+            <div className="flex items-center gap-4 relative z-10">
+              <div className="relative">
+                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner">
+                  <svg
+                    className="w-6 h-6 text-white animate-bounce"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <div className="absolute inset-0 rounded-full bg-white/40 animate-ping"></div>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-lg tracking-wide drop-shadow-sm">
+                  Thank You!
+                </h3>
+                <p className="text-white/90 text-sm">
+                  Your donation has been received successfully
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="absolute inset-0 rounded-full bg-white/40 animate-ping"></div>
         </div>
-
-        {/* Text */}
-        <div>
-          <h3 className="font-semibold text-lg tracking-wide drop-shadow-sm">
-            Thank You!
-          </h3>
-          <p className="text-white/90 text-sm">
-            Your donation has been received successfully 
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
-
+      )}
     </>
   );
 }

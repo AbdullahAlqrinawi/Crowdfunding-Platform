@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { ethers } from 'ethers';
+import { jwtDecode } from 'jwt-decode';
 
 const RewardDonationModal = ({ 
   reward, 
@@ -15,9 +16,35 @@ const RewardDonationModal = ({
   const [txHash, setTxHash] = useState('');
   const [step, setStep] = useState('');
 
+  // ✅ دالة للحصول على user_id من token بدلاً من wallet address
+  const getUserIdFromToken = () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return null;
+      
+      const decoded = jwtDecode(token);
+      console.log('Decoded token:', decoded);
+      return decoded.id || decoded._id || decoded.userId; // تأكد من اسم الحقل الصحيح
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  };
+
   const recordDonationInDatabase = async (donationData) => {
     try {
       const token = localStorage.getItem('token');
+      
+      if (!token) {
+        throw new Error('User not authenticated');
+      }
+
+      if (!donationData.project_id || !donationData.amount) {
+        throw new Error('Missing required donation data');
+      }
+
+      console.log('Sending donation data:', donationData);
+
       const response = await fetch('http://localhost:5000/api/donations', {
         method: 'POST',
         headers: {
@@ -27,11 +54,15 @@ const RewardDonationModal = ({
         body: JSON.stringify(donationData)
       });
 
+      const responseData = await response.json();
+
       if (!response.ok) {
-        throw new Error('Failed to record donation in database');
+        console.error('Donation API error:', responseData);
+        throw new Error(responseData.message || 'Failed to record donation in database');
       }
 
-      return await response.json();
+      console.log('Donation recorded successfully:', responseData);
+      return responseData;
     } catch (error) {
       console.error('Error recording donation:', error);
       throw error;
@@ -58,7 +89,8 @@ const RewardDonationModal = ({
       setStep('checking_balance');
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      const balance = await provider.getBalance(signer.address);
+      const walletAddress = await signer.getAddress();
+      const balance = await provider.getBalance(walletAddress);
       const requiredAmount = ethers.parseEther(amount.toString());
       
       if (balance < requiredAmount) {
@@ -76,16 +108,26 @@ const RewardDonationModal = ({
       const receipt = await tx.wait(1);
 
       setStep('recording_donation');
+      
+      // ✅ الحصول على userId من token بدلاً من wallet address
+      const userId = getUserIdFromToken();
+      
+      if (!userId) {
+        throw new Error('User not authenticated. Please login again.');
+      }
+
       const donationData = {
         amount: parseFloat(amount),
-        donor_id: await signer.getAddress(),
+        donor_id: userId, // ✅ استخدام userId من token
         project_id: projectId,
         currency: 'ETH',
         transaction_hash: tx.hash,
-        payment_address: await signer.getAddress(),
+        payment_address: walletAddress, // عنوان المحفظة يبقى في payment_address
         network: 'Ethereum',
         selected_reward: reward._id || reward.title
       };
+
+      console.log('Donation data being sent:', donationData);
 
       await recordDonationInDatabase(donationData);
 
