@@ -1,18 +1,18 @@
 # Node modules
 node_modules/
-client/node_modules/
-server/node_modules/
+Client/node_modules/
+Server/node_modules/
 
 # Build output
-client/build/
-server/build/
+Client/build/
+Server/build/
 dist/
 *.log
 
 # Environment variables
 .env
-client/.env
-server/.env
+Client/.env
+Server/.env
 
 # IDE / Editor files
 .vscode/
@@ -30,8 +30,8 @@ yarn-error.log*
 
 # Cache
 .cache/
-client/.cache/
-server/.cache/
+Client/.cache/
+Server/.cache/
 
 # Temporary files
 *.tmp
