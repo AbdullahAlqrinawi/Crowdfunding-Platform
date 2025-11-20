@@ -6,6 +6,32 @@ export default function StepStory({ formData, handleChange, setFormData }) {
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
 
+  // دالة جديدة لإزالة علامات Markdown
+  const cleanMarkdownText = (text) => {
+    if (!text) return "";
+    
+    return text
+      // إزالة العناوين (مثل #، ##، ###)
+      .replace(/#{1,6}\s?/g, '')
+      // إزالة النص العريض (**نص** أو __نص__)
+      .replace(/\*\*(.*?)\*\*|__(.*?)__/g, '$1$2')
+      // إزالة النص المائل (*نص* أو _نص_)
+      .replace(/\*(.*?)\*|_(.*?)_/g, '$1$2')
+      // إزالة الخط المتوسط (~~نص~~)
+      .replace(/~~(.*?)~~/g, '$1')
+      // إزالة الروابط ([نص](رابط))
+      .replace(/\[(.*?)\]\(.*?\)/g, '$1')
+      // إزالة الصور (![alt](رابط))
+      .replace(/!\[(.*?)\]\(.*?\)/g, '$1')
+      // إزالة القوائم (-، *، +)
+      .replace(/^[\s]*[-*+]\s/gm, '')
+      // إزالة الأرقام في القوائم (1.، 2.، إلخ)
+      .replace(/^[\s]*\d+\.\s/gm, '')
+      // تنظيف المسافات الزائدة
+      .replace(/\n\s*\n\s*\n/g, '\n\n')
+      .trim();
+  };
+
   const handleGenerateStory = async () => {
     if (!formData.title || !formData.description || !formData.target) {
       toast.error("Please fill in all fields first.");
@@ -64,7 +90,9 @@ export default function StepStory({ formData, handleChange, setFormData }) {
         throw new Error(response.data.message);
       }
 
-      setFormData({ ...formData, story: response.data.message });
+      // تنظيف النص من علامات Markdown قبل حفظه
+      const cleanedStory = cleanMarkdownText(response.data.message);
+      setFormData({ ...formData, story: cleanedStory });
       toast.success("Story generated successfully!");
       
       setTimeout(() => {
@@ -99,7 +127,9 @@ export default function StepStory({ formData, handleChange, setFormData }) {
 
   const handleGenerationError = () => {
     const fallbackStory = createFallbackStory();
-    setFormData({ ...formData, story: fallbackStory });
+    // تنظيف النص الاحتياطي أيضاً
+    const cleanedFallbackStory = cleanMarkdownText(fallbackStory);
+    setFormData({ ...formData, story: cleanedFallbackStory });
   };
 
   const createFallbackStory = () => {

@@ -13,6 +13,14 @@ import styles from "../../style";
 import { useSearchParams, useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../components/project/UserContext";
 
+// NEW COMPONENTS
+import ProfileHeader from "../../components/project/ProfileHeader";
+import ProjectsGrid from "../../components/project/ProjectsGrid";
+import EditProfileModal from "../../components/project/EditProfileModal";
+import EditProjectModal from "../../components/project/EditProjectModal";
+import DonorsModal from "../../components/project/DonorsModal";
+import LoadingSkeleton from "../../components/project/LoadingSkeleton";
+
 const ProfilePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { userId: profileUserId } = useParams();
@@ -71,68 +79,66 @@ const ProfilePage = () => {
     }
   };
 
-
-
   const handleDonorClick = (donor) => {
-  setIsDonorModalOpen(false);
+    setIsDonorModalOpen(false);
 
-  if (!donor) {
-    console.error("Donor object is undefined");
-    return;
-  }
+    if (!donor) {
+      console.error("Donor object is undefined");
+      return;
+    }
 
-  // البحث عن المعرف بأي اسم محتمل
-  const donorId = donor._id || donor.donor_id || donor.id || donor.userId;
-  
-  if (!donorId) {
-    console.error("No valid donor ID found in donor object:", donor);
-    return;
-  }
+    // البحث عن المعرف بأي اسم محتمل
+    const donorId = donor._id || donor.donor_id || donor.id || donor.userId;
+    
+    if (!donorId) {
+      console.error("No valid donor ID found in donor object:", donor);
+      return;
+    }
 
-  console.log("Navigating to donor profile:", donorId);
-  console.log("Full donor data:", donor);
+    console.log("Navigating to donor profile:", donorId);
+    console.log("Full donor data:", donor);
 
-  navigate(`/profile-page/${donorId}`);
-};
+    navigate(`/profile-page/${donorId}`);
+  };
 
-const handleViewDonors = async (projectId, projectTitle) => {
-  try {
-    setSelectedProjectTitle(projectTitle);
-    const response = await axios.get(
-      `http://localhost:5000/api/donations/project/${projectId}/donors`
-    );
+  const handleViewDonors = async (projectId, projectTitle) => {
+    try {
+      setSelectedProjectTitle(projectTitle);
+      const response = await axios.get(
+        `http://localhost:5000/api/donations/project/${projectId}/donors`
+      );
 
-    console.log("Full API response:", response.data);
+      console.log("Full API response:", response.data);
 
-    if (response.data && response.data.donors) {
-      console.log("Donors data received:", response.data.donors);
-      
-      // معالجة البيانات لتوحيد حقل المعرف
-      const processedDonors = response.data.donors.map((donor, index) => {
-        console.log(`Donor ${index}:`, donor);
+      if (response.data && response.data.donors) {
+        console.log("Donors data received:", response.data.donors);
         
-        // إذا كان donor_id موجوداً ولكن _id غير موجود، انسخ donor_id إلى _id
-        if (donor.donor_id && !donor._id) {
-          donor._id = donor.donor_id;
-        }
-        
-        return donor;
-      });
+        // معالجة البيانات لتوحيد حقل المعرف
+        const processedDonors = response.data.donors.map((donor, index) => {
+          console.log(`Donor ${index}:`, donor);
+          
+          // إذا كان donor_id موجوداً ولكن _id غير موجود، انسخ donor_id إلى _id
+          if (donor.donor_id && !donor._id) {
+            donor._id = donor.donor_id;
+          }
+          
+          return donor;
+        });
 
-      setDonors(processedDonors);
-      setIsDonorModalOpen(true);
-    } else {
-      console.error("No donors data received or invalid structure");
+        setDonors(processedDonors);
+        setIsDonorModalOpen(true);
+      } else {
+        console.error("No donors data received or invalid structure");
+        setDonors([]);
+        setIsDonorModalOpen(true);
+      }
+    } catch (error) {
+      console.error("Error fetching donors:", error);
+      console.error("Error details:", error.response?.data);
       setDonors([]);
       setIsDonorModalOpen(true);
     }
-  } catch (error) {
-    console.error("Error fetching donors:", error);
-    console.error("Error details:", error.response?.data);
-    setDonors([]);
-    setIsDonorModalOpen(true);
-  }
-};
+  };
 
   const currentUserId = getUserIdFromToken();
   const isOwnProfile = !profileUserId || currentUserId === profileUserId;
@@ -426,52 +432,7 @@ const handleViewDonors = async (projectId, projectTitle) => {
   };
 
   if (loading) {
-    return (
-      <>
-        <Navbar activeTab={activeTab} />
-        <div className="bg-primary min-h-screen text-white p-6">
-          <div className="max-w-6xl mx-auto">
-            {/* Header Skeleton */}
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8">
-              <div className="relative">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 animate-pulse border-2 border-zinc-600" />
-              </div>
-              <div className="flex-1 w-full space-y-3">
-                <div className="h-8 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 rounded-lg w-48 animate-pulse" />
-                <div className="h-4 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 rounded w-full max-w-md animate-pulse" />
-                <div className="h-4 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 rounded w-3/4 max-w-sm animate-pulse" />
-              </div>
-            </div>
-
-            {/* Tabs Skeleton */}
-            <div className="mb-6 flex justify-center md:justify-start gap-4">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="h-10 w-32 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 rounded-lg animate-pulse"
-                />
-              ))}
-            </div>
-
-            {/* Projects Grid Skeleton */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[1, 2, 3, 4, 5, 6].map((item) => (
-                <div
-                  key={item}
-                  className="bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700"
-                >
-                  <div className="h-48 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 animate-pulse" />
-                  <div className="p-4 space-y-3">
-                    <div className="h-6 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 rounded animate-pulse" />
-                    <div className="h-4 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 rounded w-3/4 animate-pulse" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </>
-    );
+    return <LoadingSkeleton activeTab={activeTab} />;
   }
 
   if (!displayedUser)
@@ -483,50 +444,12 @@ const handleViewDonors = async (projectId, projectTitle) => {
       <main className="bg-primary min-h-screen text-white p-6">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8">
-            <div className="relative">
-              <img
-                src={previewImage || "/default-avatar.png"}
-                alt="Preview"
-                className="w-24 h-24 rounded-full object-cover border-2 border-zinc-600"
-              />
-              {isOwnProfile && (
-                <button
-                  onClick={() => setIsOpen(true)}
-                  className="absolute bottom-0 right-0 bg-zinc-700 p-2 rounded-full hover:bg-zinc-600 transition"
-                >
-                  <FaPen size={16} />
-                </button>
-              )}
-            </div>
-
-            <div className="flex-1">
-              <h1 className="text-3xl font-bold">{displayedUser.username}</h1>
-              <p className="mt-2 text-zinc-300">
-                {displayedUser.bio || "No bio yet."}
-              </p>
-              <div className="flex gap-4 mt-4 text-xl">
-                {displayedUser.twitter && (
-                  <a
-                    href={displayedUser.twitter}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <FaXTwitter />
-                  </a>
-                )}
-                {displayedUser.linkedin && (
-                  <a
-                    href={displayedUser.linkedin}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <FaLinkedin />
-                  </a>
-                )}
-              </div>
-            </div>
-          </div>
+          <ProfileHeader
+            previewImage={previewImage}
+            displayedUser={displayedUser}
+            isOwnProfile={isOwnProfile}
+            onEditClick={() => setIsOpen(true)}
+          />
 
           {/* Tabs */}
           <div className="mb-6 flex justify-center md:justify-start">
@@ -538,58 +461,14 @@ const handleViewDonors = async (projectId, projectTitle) => {
           </div>
 
           {/* Projects */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {projects[activeTab] && projects[activeTab].length > 0 ? (
-              projects[activeTab].map((proj, idx) => (
-                <div key={idx} className="relative">
-                  <CampaignCard
-                    id={proj._id}
-                    owner={proj.owner_id?.username || displayedUser.username}
-                    title={proj.title}
-                    image={
-                      proj.image
-                        ? `http://localhost:5000/${proj.image.replace(
-                            /\\/g,
-                            "/"
-                          )}`
-                        : "/default-project.png"
-                    }
-                    target={proj.target}
-                    amountCollected={proj.amount_raised}
-                    deadline={proj.end_date}
-                    profileImage={
-                      displayedUser.profile_pic
-                        ? `http://localhost:5000/uploads/${displayedUser.profile_pic}`
-                        : "/default-avatar.png"
-                    }
-                  />
-                  {isOwnProfile && activeTab === "My Campaigns" && (
-                    <div className="absolute top-2 right-2 flex gap-2">
-                      <button
-                        onClick={() => handleEditProject(proj)}
-                        className="bg-zinc-700 p-2 rounded-full hover:bg-zinc-600 transition"
-                      >
-                        <FaEdit size={16} />
-                      </button>
-                      <button
-                        onClick={() => handleViewDonors(proj._id, proj.title)}
-                        className="bg-indigo-600 p-2 rounded-full hover:bg-indigo-500 transition flex items-center justify-center"
-                        style={{ width: "40px", height: "40px" }}
-                      >
-                        <FaUsers size={16} />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ))
-            ) : (
-              <p className="col-span-full text-center text-zinc-400">
-                {isOwnProfile
-                  ? `No ${activeTab.toLowerCase()} yet.`
-                  : `No campaigns yet.`}
-              </p>
-            )}
-          </div>
+          <ProjectsGrid
+            projects={projects[activeTab]}
+            activeTab={activeTab}
+            displayedUser={displayedUser}
+            isOwnProfile={isOwnProfile}
+            onEditProject={handleEditProject}
+            onViewDonors={handleViewDonors}
+          />
         </div>
       </main>
 
@@ -599,319 +478,38 @@ const handleViewDonors = async (projectId, projectTitle) => {
           <Footer />
 
           {/* Edit Profile Modal */}
-          <Dialog
+          <EditProfileModal
             open={isOpen}
             onClose={() => setIsOpen(false)}
-            className="relative z-50"
-          >
-            <div className="fixed inset-0 bg-black/60" aria-hidden="true" />
-            <div className="fixed inset-0 flex items-center justify-center p-4">
-              <Dialog.Panel className="w-full max-w-lg max-h-[90vh] overflow-y-auto bg-zinc-900 p-6 rounded-xl shadow-xl border border-zinc-700">
-                <Dialog.Title className="text-xl font-bold mb-4 text-white">
-                  Edit Profile
-                </Dialog.Title>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="flex justify-center">
-                    <img
-                      src={previewImage || "/default-avatar.png"}
-                      alt="Preview"
-                      className="w-24 h-24 rounded-full object-cover border-2 border-zinc-600"
-                    />
-                  </div>
-                  <div className="flex justify-center">
-                    <button
-                      type="button"
-                      onClick={() => fileInputRef.current.click()}
-                      className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white transition"
-                    >
-                      Choose an image
-                    </button>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      ref={fileInputRef}
-                      onChange={handleFileChange}
-                      className="hidden"
-                    />
-                  </div>
-
-                  <input
-                    type="text"
-                    name="username"
-                    placeholder="Username"
-                    value={formData.username}
-                    onChange={handleChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                  />
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                  />
-                  <textarea
-                    name="bio"
-                    placeholder="Bio"
-                    value={formData.bio}
-                    onChange={handleChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                  />
-                  <input
-                    type="text"
-                    name="linkedin"
-                    placeholder="LinkedIn"
-                    value={formData.linkedin}
-                    onChange={handleChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                  />
-                  <input
-                    type="text"
-                    name="twitter"
-                    placeholder="Twitter"
-                    value={formData.twitter}
-                    onChange={handleChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                  />
-                  <div className="flex justify-end gap-2 mt-4">
-                    <button
-                      type="button"
-                      onClick={() => setIsOpen(false)}
-                      className="px-4 py-2 rounded-xl bg-zinc-600 text-white hover:bg-zinc-700 transition"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isSaving}
-                      className="px-4 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 transition flex items-center gap-2"
-                    >
-                      {isSaving ? "Saving..." : "Save Changes"}
-                    </button>
-                  </div>
-                </form>
-              </Dialog.Panel>
-            </div>
-          </Dialog>
+            previewImage={previewImage}
+            fileInputRef={fileInputRef}
+            formData={formData}
+            onChange={handleChange}
+            onFileChange={handleFileChange}
+            onSubmit={handleSubmit}
+            isSaving={isSaving}
+          />
 
           {/* Edit Project Modal */}
-          <Dialog
+          <EditProjectModal
             open={isProjectEditOpen}
             onClose={() => setIsProjectEditOpen(false)}
-            className="relative z-50"
-          >
-            <div className="fixed inset-0 bg-black/60" aria-hidden="true" />
-            <div className="fixed inset-0 flex items-center justify-center p-4">
-              <Dialog.Panel className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-zinc-900 p-6 rounded-xl shadow-xl border border-zinc-700">
-                <Dialog.Title className="text-xl font-bold mb-4 text-white">
-                  Edit Project
-                </Dialog.Title>
-                <form onSubmit={handleProjectSubmit} className="space-y-4">
-                  <div className="flex justify-center">
-                    <button
-                      type="button"
-                      onClick={() => projectFileInputRef.current.click()}
-                      className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white transition"
-                    >
-                      Change Project Image
-                    </button>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      ref={projectFileInputRef}
-                      onChange={handleProjectFileChange}
-                      className="hidden"
-                    />
-                  </div>
+            projectFormData={projectFormData}
+            projectFileInputRef={projectFileInputRef}
+            onProjectFileChange={handleProjectFileChange}
+            onProjectChange={handleProjectChange}
+            onProjectSubmit={handleProjectSubmit}
+            isSaving={isSaving}
+          />
 
-                  <input
-                    type="text"
-                    name="title"
-                    placeholder="Project Title"
-                    value={projectFormData.title}
-                    onChange={handleProjectChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                  />
-                  <textarea
-                    name="description"
-                    placeholder="Project Description"
-                    value={projectFormData.description}
-                    onChange={handleProjectChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                    rows="3"
-                  />
-                  <input
-                    type="number"
-                    name="target"
-                    placeholder="Funding Target"
-                    value={projectFormData.target}
-                    onChange={handleProjectChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                  />
-                  <input
-                    type="date"
-                    name="end_date"
-                    value={projectFormData.end_date}
-                    onChange={handleProjectChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                  />
-                  <textarea
-                    name="story"
-                    placeholder="Project Story"
-                    value={projectFormData.story}
-                    onChange={handleProjectChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                    rows="4"
-                  />
-
-                  <select
-                    name="location"
-                    value={projectFormData.location}
-                    onChange={handleProjectChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                  >
-                    <option value="">Select Location</option>
-                    <option value="Jordan">Jordan</option>
-                    <option value="USA">USA</option>
-                    <option value="UK">UK</option>
-                    <option value="Germany">Germany</option>
-                    <option value="Canada">Canada</option>
-                    <option value="India">India</option>
-                    <option value="Australia">Australia</option>
-                    <option value="France">France</option>
-                  </select>
-
-                  <select
-                    name="categoryMain"
-                    value={projectFormData.categoryMain}
-                    onChange={handleProjectChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                  >
-                    <option value="">Select Main Category</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Education">Education</option>
-                    <option value="Healthcare">Healthcare</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Art">Art</option>
-                    <option value="Environment">Environment</option>
-                    <option value="Gaming">Gaming</option>
-                    <option value="Fashion">Fashion</option>
-                    <option value="Real Estate">Real Estate</option>
-                    <option value="Food">Food</option>
-                  </select>
-
-                  <select
-                    name="type"
-                    value={projectFormData.type}
-                    onChange={handleProjectChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                  >
-                    <option value="">Select Type</option>
-                    <option value="Individual">Individual</option>
-                    <option value="Team">Team</option>
-                    <option value="Organization">Organization</option>
-                    <option value="Non-profit">Non-profit</option>
-                    <option value="Commercial">Commercial</option>
-                  </select>
-
-                  <select
-                    name="status"
-                    value={projectFormData.status}
-                    onChange={handleProjectChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                  >
-                    <option value="">Select Status</option>
-                    <option value="Upcoming">Upcoming</option>
-                    <option value="Active">Active</option>
-                    <option value="Ended">Ended</option>
-                  </select>
-
-                  <input
-                    type="text"
-                    name="categoryOptional"
-                    placeholder="Optional Category"
-                    value={projectFormData.categoryOptional}
-                    onChange={handleProjectChange}
-                    className="w-full p-2 rounded bg-zinc-800 text-white"
-                  />
-
-                  <div className="flex justify-end gap-2 mt-4">
-                    <button
-                      type="button"
-                      onClick={() => setIsProjectEditOpen(false)}
-                      className="px-4 py-2 rounded-xl bg-zinc-600 text-white hover:bg-zinc-700 transition"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isSaving}
-                      className="px-4 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 transition flex items-center gap-2"
-                    >
-                      {isSaving ? "Saving..." : "Save Changes"}
-                    </button>
-                  </div>
-                </form>
-              </Dialog.Panel>
-            </div>
-          </Dialog>
-
-          <Dialog
+          {/* Donors Modal */}
+          <DonorsModal
             open={isDonorModalOpen}
             onClose={() => setIsDonorModalOpen(false)}
-            className="relative z-50"
-          >
-            <div className="fixed inset-0 bg-black/60" aria-hidden="true" />
-            <div className="fixed inset-0 flex items-center justify-center p-4">
-              <Dialog.Panel className="w-full max-w-md bg-zinc-900 p-6 rounded-xl shadow-xl border border-zinc-700">
-                <Dialog.Title className="text-xl font-bold mb-4 text-white">
-                  Donors for {selectedProjectTitle}
-                </Dialog.Title>
-
-                {donors.length === 0 ? (
-                  <p className="text-zinc-400 text-center">No donors yet.</p>
-                ) : (
-                  <ul className="space-y-3 max-h-80 overflow-y-auto">
-                    {donors.map((donor, idx) => (
-                      <li
-                        key={idx}
-                        onClick={() => handleDonorClick(donor)} // تمرير donor كامل بدلاً من donor._id فقط
-                        className="flex items-center gap-3 bg-zinc-800 p-3 rounded-lg cursor-pointer hover:bg-zinc-700 transition-colors"
-                      >
-                        <img
-                          src={
-                            donor.profile_pic
-                              ? `http://localhost:5000/uploads/${donor.profile_pic}`
-                              : "/default-avatar.png"
-                          }
-                          alt="donor"
-                          className="w-10 h-10 rounded-full object-cover"
-                        />
-                        <div className="flex-1">
-                          <p className="font-semibold text-white">
-                            {donor.username || "Anonymous"}
-                          </p>
-                          <p className="text-zinc-400 text-sm">
-                            {donor.amount} ETH
-                          </p>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                <div className="flex justify-end mt-4">
-                  <button
-                    onClick={() => setIsDonorModalOpen(false)}
-                    className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg text-white"
-                  >
-                    Close
-                  </button>
-                </div>
-              </Dialog.Panel>
-            </div>
-          </Dialog>
+            donors={donors}
+            selectedProjectTitle={selectedProjectTitle}
+            onDonorClick={handleDonorClick}
+          />
         </div>
       </div>
     </>
