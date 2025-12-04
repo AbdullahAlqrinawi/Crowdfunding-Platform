@@ -1,0 +1,8 @@
+db.getUsers()
+use admin
+db.users.find().pretty()
+show collections
+use crowdfunding
+show dbs
+password123
+show dbs

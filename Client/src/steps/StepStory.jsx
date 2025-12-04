@@ -38,19 +38,19 @@ export default function StepStory({ formData, handleChange, setFormData }) {
       return;
     }
 
-    const prompt = `Write an inspiring crowdfunding project story in English based on these details:
-    Title: ${formData.title}
-    Description: ${formData.description}
-    Target Amount: $${formData.target}
+const prompt = `Write an inspiring and engaging crowdfunding project story in English based on these details:
+Title: ${formData.title}
+Description: ${formData.description}
 
-    Make it emotional, realistic, and motivating. Include:
-    - Project background and mission
-    - Why this project matters
-    - How the funds will be used
-    - The impact on the community
-    - A call to action
+Focus on:
+- The project's background and mission
+- Why this project matters and its significance
+- The positive impact it will have on the community
+- The journey and vision behind the project
+- A call to action to support the mission (not focusing on the money)
 
-    Write in a professional but engaging tone.`;
+Write in a professional, emotional, and motivating tone, making the reader feel connected to the project's story.`;
+
 
     try {
       setLoading(true);
@@ -133,33 +133,33 @@ export default function StepStory({ formData, handleChange, setFormData }) {
   };
 
   const createFallbackStory = () => {
-    return `# ${formData.title || "Our Project"}
+    return `${formData.title || "Our Project"}
 
-## Our Mission
+Our Mission
 ${formData.description || "We are working on an important project that needs your support."}
 
-## The Story Behind Our Project
+The Story Behind Our Project
 We believe that every great change starts with a simple idea and the courage to pursue it. Our journey began when we recognized a need in our community - a gap that we knew we could fill with passion, dedication, and your support.
 
-## Why This Matters
+Why This Matters
 This project represents more than just a goal; it's a commitment to making a tangible difference. We've seen firsthand the challenges and opportunities, and we're convinced that with the right resources, we can create lasting positive impact.
 
-## How Your Support Helps
+How Your Support Helps
 We are seeking to raise $${formData.target || "our target"} to bring this vision to life. Your contributions will be strategically allocated to ensure maximum impact:
 
-- **Core Development** (40%): Turning our vision into actionable reality
-- **Essential Resources** (30%): Acquiring the tools and materials we need
-- **Expert Execution** (20%): Bringing together the right talent and expertise
-- **Community Engagement** (10%): Ensuring our solution reaches those who need it most
+Core Development (40%): Turning our vision into actionable reality
+Essential Resources (30%): Acquiring the tools and materials we need
+Expert Execution (20%): Bringing together the right talent and expertise
+Community Engagement (10%): Ensuring our solution reaches those who need it most
 
-## The Impact You'll Create
+The Impact You'll Create
 Every contribution moves us closer to our goal. You're not just funding a project - you're investing in innovation, community development, and creating a blueprint for future initiatives.
 
-## Join Our Movement
+Join Our Movement
 We invite you to be part of something bigger than all of us. Together, we can transform challenges into opportunities and ideas into reality.
 
 Thank you for considering supporting our mission. Your belief in what we're building gives us the strength to push forward and make a real difference.`;
-  };
+};
 
   return (
     <div className="bg-gray-800 p-6 rounded-2xl shadow-md">
