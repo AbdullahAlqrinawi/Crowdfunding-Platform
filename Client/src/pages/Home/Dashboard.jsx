@@ -37,29 +37,10 @@ export const Dashboard = () => {
   };
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      const userId = getUserIdFromToken();
-      if (userId) {
-        try {
-          const response = await axios.get(`http://localhost:5000/api/users/${userId}`);
-          
-          if (updateUser) {
-            updateUser(response.data.user);
-          } else if (fetchUser) {
-            fetchUser();
-          }
-
-          if (!response.data.user.bio) {
-            setShowProfileModal(true);
-          }
-        } catch (error) {
-          console.error('Error fetching user profile:', error);
-        }
-      }
-    };
-
-    fetchUserProfile();
-  }, [navigate, updateUser, fetchUser]); 
+  if (user && !user.bio) {
+    setShowProfileModal(true);
+  }
+}, [user]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -107,7 +88,7 @@ export const Dashboard = () => {
         ref={navbarRef}
         className={`z-10 ${isNavbarSticky ? 'sticky top-0 bg-primary shadow-lg' : ''}`}
       >
-        <Navbar user={user}/>
+        <Navbar/>
       </div>
 
       <DashboardHero />

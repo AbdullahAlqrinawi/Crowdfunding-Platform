@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { logo } from "../../assets";
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { useUser } from '../../components/project/UserContext';
 
 export const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -9,6 +10,7 @@ export const Login = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { fetchUser } = useUser(); // Get fetchUser from context
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -30,7 +32,9 @@ export const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('token', data.token); 
+        localStorage.setItem('token', data.token);
+        // Immediately fetch the new user data
+        await fetchUser();
         navigate('/dashboard');
       } else {
         setError(data.message || 'Invalid email or password');
@@ -44,21 +48,18 @@ export const Login = () => {
 
   return (
     <div className="min-h-screen bg-primary text-white flex flex-col items-center justify-start pt-12 px-4">
-      {/* الشعار */}
       <img
         src={logo}
         alt="Sparkit Logo"
         className="w-[150px] sm:w-[180px] md:w-[200px] object-contain"
       />
 
-      {/* الفورم */}
       <form
         onSubmit={handleSubmit}
         className="bg-gray-800 p-6 rounded-xl w-full max-w-md space-y-4 shadow-lg"
       >
         <h2 className="text-2xl font-bold text-center">Sign In</h2>
 
-        {/* حقل الإيميل */}
         <div>
           <label className="block mb-1 text-sm font-medium">Email</label>
           <input
@@ -71,7 +72,6 @@ export const Login = () => {
           />
         </div>
 
-        {/* حقل كلمة السر مع زر إظهار/إخفاء */}
         <div>
           <label className="block mb-1 text-sm font-medium">Password</label>
           <div className="relative">
@@ -97,12 +97,10 @@ export const Login = () => {
           </div>
         </div>
 
-        {/* رسالة الخطأ */}
         {error && <div className="text-red-500 text-sm">{error}</div>}
 
-        {/* الرابط للتسجيل */}
-        <p className="mt-4 text-sm text-gray-300">
-          Don’t have an account?{' '}
+        <p className="text-center">
+          Don't have an account?{' '}
           <button
             type="button"
             onClick={() => navigate('/signup')}
@@ -112,7 +110,6 @@ export const Login = () => {
           </button>
         </p>
 
-        {/* زر الدخول */}
         <button
           type="submit"
           disabled={isLoading}

@@ -11,6 +11,7 @@ import ProjectDetails from "./pages/Home/ProjectDetails";
 import {PublicProjects}  from "./pages/PublicProjects/PublicProjects";
 
 
+
 const routes = (
   <Router>
     <Routes>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { EyeIcon, EyeSlashIcon, CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { useSignUp } from './useSignUp';
 import { logo } from '../../assets';
+import { useNavigate } from 'react-router-dom';
 
 export const SignUp = () => {
   const {
@@ -22,6 +23,9 @@ export const SignUp = () => {
     number: false,
     specialChar: false,
   });
+
+  const navigate = useNavigate();
+
 
   const [showValidation, setShowValidation] = useState(false);
 
@@ -152,6 +156,17 @@ export const SignUp = () => {
         >
           {isLoading ? 'Creating Account...' : 'Create Account'}
         </button>
+        <p className="mt-4 text-sm text-gray-300">
+  Already have an account?{' '}
+  <button
+    type="button"
+    onClick={() => navigate('/login')}
+    className="text-indigo-400 hover:underline"
+  >
+    Sign In
+  </button>
+</p>
+
       </form>
     </div>
   );

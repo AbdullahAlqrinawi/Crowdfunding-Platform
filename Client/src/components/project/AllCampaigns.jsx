@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import CampaignCard from "../landing/CampaignCard";
 import { useNavigate } from "react-router-dom";
 
 export const AllCampaigns = ({ searchQuery, filters }) => {
   const [campaignsData, setCampaignsData] = useState([]);
-  const [filteredCampaigns, setFilteredCampaigns] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const campaignsPerPage = 9;
   const navigate = useNavigate();
@@ -14,6 +13,7 @@ export const AllCampaigns = ({ searchQuery, filters }) => {
     const fetchCampaigns = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/projects");
+
         const transformedData = response.data.projects.map((project) => ({
           id: project._id,
           owner: project.owner_id,
@@ -27,8 +27,8 @@ export const AllCampaigns = ({ searchQuery, filters }) => {
           category: project.main_category,
           type: project.project_type,
         }));
+
         setCampaignsData(transformedData);
-        setFilteredCampaigns(transformedData);
       } catch (err) {
         console.error("Error fetching projects:", err.message);
       }
@@ -37,59 +37,57 @@ export const AllCampaigns = ({ searchQuery, filters }) => {
     fetchCampaigns();
   }, []);
 
-  useEffect(() => {
+  const filteredCampaigns = useMemo(() => {
     let result = [...campaignsData];
 
     if (searchQuery) {
-      result = result.filter(campaign =>
-        campaign.title.toLowerCase().includes(searchQuery.toLowerCase())
+      result = result.filter(c =>
+        c.title.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
     if (filters.status) {
-      result = result.filter(campaign => {
+      result = result.filter(c => {
         if (filters.status === 'Upcoming') {
-          return new Date(campaign.deadline) > new Date();
+          return new Date(c.deadline) > new Date();
         } else if (filters.status === 'Active') {
-          return campaign.status === 'OPEN';
+          return c.status === 'OPEN';
         } else if (filters.status === 'Ended') {
-          return campaign.status === 'CLOSED' || new Date(campaign.deadline) < new Date();
+          return c.status === 'CLOSED' || new Date(c.deadline) < new Date();
         }
         return true;
       });
     }
 
     if (filters.location) {
-      result = result.filter(campaign => 
-        campaign.location?.toLowerCase() === filters.location.toLowerCase()
+      result = result.filter(c => 
+        c.location?.toLowerCase() === filters.location.toLowerCase()
       );
     }
 
     if (filters.category) {
-      result = result.filter(campaign => 
-        campaign.category?.toLowerCase() === filters.category.toLowerCase()
+      result = result.filter(c => 
+        c.category?.toLowerCase() === filters.category.toLowerCase()
       );
     }
 
     if (filters.type) {
-      result = result.filter(campaign => 
-        campaign.type?.toLowerCase() === filters.type.toLowerCase()
+      result = result.filter(c => 
+        c.type?.toLowerCase() === filters.type.toLowerCase()
       );
     }
 
-    setFilteredCampaigns(result);
-    setCurrentPage(1); 
+    return result;
   }, [searchQuery, filters, campaignsData]);
 
+  // Pagination
   const indexOfLast = currentPage * campaignsPerPage;
   const indexOfFirst = indexOfLast - campaignsPerPage;
   const currentCampaigns = filteredCampaigns.slice(indexOfFirst, indexOfLast);
   const totalPages = Math.ceil(filteredCampaigns.length / campaignsPerPage);
 
   const goToPage = (pageNum) => {
-    if (pageNum >= 1 && pageNum <= totalPages) {
-      setCurrentPage(pageNum);
-    }
+    if (pageNum >= 1 && pageNum <= totalPages) setCurrentPage(pageNum);
   };
 
   return (
@@ -105,9 +103,9 @@ export const AllCampaigns = ({ searchQuery, filters }) => {
               <CampaignCard
                 key={item.id}
                 {...item}
-                handleClick={() => navigate(`/campaign/${item.id}`, {
-                  state: item
-                })}
+                handleClick={() =>
+                  navigate(`/campaign/${item.id}`, { state: item })
+                }
               />
             ))}
           </div>

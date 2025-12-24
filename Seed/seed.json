@@ -1,0 +1,698 @@
+   {"users": [
+  {
+    "_id": "64f000000000000000000001",
+    "username": "NeuraTech",
+    "email": "contact@neuratech.io",
+    "password": "$2b$10$hashedpassword",
+    "bio": "c",
+    "linkedin": "https://linkedin.com/company/neuratech",
+    "twitter": "https://twitter.com/neuratech",
+    "profile_pic": "AI_PROMPT: A modern tech company logo/profile image for 'NeuraTech', abstract neural network icon, blue-purple gradient, minimal clean background, professional branding, 4k",
+    "role": "COMPANY",
+    "isVerified": true,
+    "created_at": "2025-01-10T10:00:00.000Z",
+    "updated_at": "2025-01-10T10:00:00.000Z"
+  },
+  {
+    "_id": "64f000000000000000000002",
+    "username": "BlockForge Labs",
+    "email": "hello@blockforge.io",
+    "password": "$2b$10$hashedpassword",
+    "bio": "BlockForge Labs develops Web3 infrastructure for secure payments, identity, and on-chain transparency.",
+    "linkedin": "https://linkedin.com/company/blockforge-labs",
+    "twitter": "https://twitter.com/blockforge",
+    "profile_pic": "AI_PROMPT: Web3 company logo/profile image for 'BlockForge Labs', geometric blockchain cube + forge spark icon, dark background, teal highlights, clean minimal, premium startup branding, 4k",
+    "role": "COMPANY",
+    "isVerified": true,
+    "created_at": "2025-01-12T12:00:00.000Z",
+    "updated_at": "2025-01-12T12:00:00.000Z"
+  },
+  {
+    "_id": "64f000000000000000000003",
+    "username": "MedNova HealthTech",
+    "email": "support@mednova.health",
+    "password": "$2b$10$hashedpassword",
+    "bio": "MedNova delivers HealthTech products powered by secure cloud and AI to improve patient outcomes.",
+    "linkedin": "https://linkedin.com/company/mednova-healthtech",
+    "twitter": "https://twitter.com/mednova",
+    "profile_pic": "AI_PROMPT: HealthTech company logo/profile image for 'MedNova', medical cross + data pulse line, white background, turquoise-blue palette, friendly modern style, 4k",
+    "role": "COMPANY",
+    "isVerified": true,
+    "created_at": "2025-01-14T09:30:00.000Z",
+    "updated_at": "2025-01-14T09:30:00.000Z"
+  },
+  {
+    "_id": "64f000000000000000000004",
+    "username": "GreenGrid IoT",
+    "email": "team@greengrid.energy",
+    "password": "$2b$10$hashedpassword",
+    "bio": "GreenGrid IoT designs connected hardware + analytics for energy efficiency and sustainable buildings.",
+    "linkedin": "https://linkedin.com/company/greengrid-iot",
+    "twitter": "https://twitter.com/greengridiot",
+    "profile_pic": "AI_PROMPT: Eco-tech company logo/profile image for 'GreenGrid IoT', leaf + circuit lines icon, green gradient, minimal clean style, 4k",
+    "role": "COMPANY",
+    "isVerified": true,
+    "created_at": "2025-01-16T08:20:00.000Z",
+    "updated_at": "2025-01-16T08:20:00.000Z"
+  },
+  {
+    "_id": "64f000000000000000000005",
+    "username": "CyberShield Security",
+    "email": "info@cybershield.sec",
+    "password": "$2b$10$hashedpassword",
+    "bio": "c",
+    "linkedin": "https://linkedin.com/company/cybershield-security",
+    "twitter": "https://twitter.com/cybershieldsec",
+    "profile_pic": "AI_PROMPT: Cybersecurity company logo/profile image for 'CyberShield', shield icon with subtle circuit pattern, dark navy background, neon blue accent, clean professional, 4k",
+    "role": "COMPANY",
+    "isVerified": true,
+    "created_at": "2025-01-18T14:10:00.000Z",
+    "updated_at": "2025-01-18T14:10:00.000Z"
+  },
+  {
+    "_id": "64f000000000000000000006",
+    "username": "FinPulse Analytics",
+    "email": "contact@finpulse.ai",
+    "password": "$2b$10$hashedpassword",
+    "bio": "FinPulse provides fintech analytics and fraud prevention using modern ML pipelines and dashboards.",
+    "linkedin": "https://linkedin.com/company/finpulse-analytics",
+    "twitter": "https://twitter.com/finpulseai",
+    "profile_pic": "AI_PROMPT: Fintech company logo/profile image for 'FinPulse Analytics', upward chart + pulse line icon, modern flat style, deep blue + gold accents, minimal clean background, 4k",
+    "role": "COMPANY",
+    "isVerified": true,
+    "created_at": "2025-01-20T11:45:00.000Z",
+    "updated_at": "2025-01-20T11:45:00.000Z"
+  }
+],
+
+  "pricing": {
+    "currency": "ETH",
+    "eth_usd_rate": 2945.96,
+    "as_of": "2025-12-23"
+  },
+  "project": [
+    {
+      "title": "Smart Traffic AI System",
+      "description": "AI traffic management for smart cities using real-time camera analytics and congestion prediction.",
+      "image": "AI_PROMPT: Futuristic smart city traffic, AI data overlays, traffic lights optimization, modern cityscape, cinematic lighting, ultra-detailed, 4k",
+      "currency": "ETH",
+      "target": 25.4586,
+      "amount_raised": 6.2798,
+      "owner_id": "64f000000000000000000001",
+      "status": "OPEN",
+      "start_date": "2025-02-01T00:00:00.000Z",
+      "end_date": "2025-04-20T00:00:00.000Z",
+      "wallet_address": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+      "rewards": [
+        { "title": "Supporter Badge", "description": "Public supporter badge + updates", "currency": "ETH", "amount": 0.0068 },
+        { "title": "Beta Dashboard", "description": "Early access to analytics dashboard", "currency": "ETH", "amount": 0.0339 },
+        { "title": "Pilot Partner", "description": "Pilot integration for one intersection", "currency": "ETH", "amount": 0.1697 }
+      ],
+      "story": "Every day, millions of people lose time, fuel, and peace of mind while sitting in traffic that feels unavoidable. But congestion is not only an inconvenience—it’s a public safety issue, an environmental burden, and a hidden tax on productivity. Smart Traffic AI System was born from a simple question: what if intersections could “understand” movement in real time and adapt with the same intelligence we expect from modern cities?\n\nOur mission is to help urban communities move more safely and efficiently by combining computer vision and predictive analytics to optimize traffic signals. Instead of relying on static timing plans that ignore real conditions, our system reads live patterns, anticipates bottlenecks, and recommends signal adjustments that reduce waiting, smooth flow, and improve emergency response times.\n\nThis matters because small improvements scale massively: fewer stop-and-go cycles mean lower emissions, safer crossings for pedestrians, and less stress for commuters. For city teams, it means data-backed decisions, clearer visibility into congestion causes, and a pathway toward smarter infrastructure without replacing everything at once.\n\nWe’re building a future where streets are designed around people, not gridlock. If you believe cities should be cleaner, safer, and easier to navigate, join us—share the mission, follow the progress, and help us bring intelligent mobility to more communities.",
+      "location": "Berlin, Germany",
+      "main_category": "Technology",
+      "optional_category": "Artificial Intelligence",
+      "project_type": "Company",
+      "created_at": "2025-02-01T10:00:00.000Z",
+      "updated_at": "2025-02-01T10:00:00.000Z"
+    },
+    {
+      "title": "VisionGuard Factory Inspection",
+      "description": "Computer vision quality inspection that detects defects on production lines with high accuracy.",
+      "image": "AI_PROMPT: Industrial factory conveyor belt, camera inspection system, defect detection overlays, clean modern manufacturing scene, sharp realistic style, 4k",
+      "currency": "ETH",
+      "target": 18.3302,
+      "amount_raised": 4.1413,
+      "owner_id": "64f000000000000000000001",
+      "status": "OPEN",
+      "start_date": "2025-02-10T00:00:00.000Z",
+      "end_date": "2025-05-01T00:00:00.000Z",
+      "wallet_address": "0x66f820a414680b5bcda5eeca5dea238543f42054",
+      "rewards": [
+        { "title": "Early Updates", "description": "Monthly updates + behind the scenes", "currency": "ETH", "amount": 0.0051 },
+        { "title": "Demo Access", "description": "Private demo of defect detection", "currency": "ETH", "amount": 0.0255 },
+        { "title": "On-site Workshop", "description": "Workshop for your team", "currency": "ETH", "amount": 0.1358 }
+      ],
+      "story": "Manufacturing is built on precision, but quality control often depends on tired eyes, inconsistent checks, and processes that can’t keep up with modern production speed. VisionGuard started with engineers and operators who saw the same pattern every day: defects slipping through, waste piling up, and teams spending hours reworking what should have been right the first time.\n\nOur mission is to make quality inspection faster, fairer, and more reliable using computer vision that detects defects instantly on the line. By turning inspection into a real-time, data-driven system, factories can reduce waste, protect brand reputation, and create safer working environments where people focus on higher-value decisions instead of repetitive checks.\n\nThis project matters because small defect rates become huge losses at scale—more raw materials consumed, more energy wasted, and more products returned. VisionGuard helps teams catch issues early, trace root causes, and build continuous improvement into daily operations.\n\nWe’re on a journey to make advanced inspection accessible, not intimidating—clear dashboards, practical deployment, and measurable results that shop-floor teams trust. If you care about smarter production, sustainability through waste reduction, and empowering workers with better tools, stand with us. Follow the build, share the vision, and help us raise the standard for quality everywhere.",
+      "location": "Eindhoven, Netherlands",
+      "main_category": "Technology",
+      "optional_category": "Computer Vision",
+      "project_type": "Company",
+      "created_at": "2025-02-10T10:00:00.000Z",
+      "updated_at": "2025-02-10T10:00:00.000Z"
+    },
+    {
+      "title": "NeuraAssist Customer AI Agent",
+      "description": "A multilingual AI assistant for customer support that integrates with ticketing systems and reduces response time.",
+      "image": "AI_PROMPT: Modern AI assistant concept, chat UI floating panels, multilingual icons, professional SaaS vibe, clean minimal, 4k",
+      "currency": "ETH",
+      "target": 14.2568,
+      "amount_raised": 3.3266,
+      "owner_id": "64f000000000000000000001",
+      "status": "OPEN",
+      "start_date": "2025-02-15T00:00:00.000Z",
+      "end_date": "2025-04-30T00:00:00.000Z",
+      "wallet_address": "0xF977814e90dA44bFA03b6295A0616a897441aceC",
+      "rewards": [
+        { "title": "Supporter", "description": "Name in credits + updates", "currency": "ETH", "amount": 0.0034 },
+        { "title": "Team Plan", "description": "3 months for 1 team", "currency": "ETH", "amount": 0.0509 },
+        { "title": "Enterprise Pilot", "description": "Pilot integration + onboarding", "currency": "ETH", "amount": 0.3055 }
+      ],
+      "story": "Behind every \"We’ll get back to you soon\" is a real person waiting—sometimes anxious, sometimes confused, sometimes just needing a simple answer to move forward. Support teams work hard, but volumes keep rising, languages keep expanding, and the expectation for instant help has become universal. NeuraAssist was created to restore calm and clarity to customer support.\n\nOur mission is to deliver a multilingual AI agent that integrates with ticketing systems and helps teams respond faster while staying human-centered. NeuraAssist handles repetitive questions, gathers key details up front, and routes complex issues to the right people—so customers feel heard and agents feel supported.\n\nThis project matters because good support is not a luxury; it’s trust. When users receive timely help in their own language, frustration drops and loyalty grows. For organizations, it means shorter response times, more consistent answers, and a support culture that scales without burning out the team.\n\nWe’re building NeuraAssist with a clear vision: AI should reduce noise, not create distance. It should empower people to do their best work, not replace empathy. If you believe customer experience can be both efficient and genuinely caring, join the journey—follow the updates, test the early versions, and help us shape a future where support feels like support again.",
+      "location": "London, UK",
+      "main_category": "Technology",
+      "optional_category": "AI Tools",
+      "project_type": "Company",
+      "created_at": "2025-02-15T10:00:00.000Z",
+      "updated_at": "2025-02-15T10:00:00.000Z"
+    },
+    {
+      "title": "ChainPay Merchant Gateway",
+      "description": "Web3 payment gateway for small businesses with instant receipts and transparent fees.",
+      "image": "AI_PROMPT: Web3 payment gateway on laptop screen, crypto payment icons, clean fintech UI, modern store checkout scene, 4k",
+      "currency": "ETH",
+      "target": 22.0658,
+      "amount_raised": 7.1291,
+      "owner_id": "64f000000000000000000002",
+      "status": "OPEN",
+      "start_date": "2025-02-05T00:00:00.000Z",
+      "end_date": "2025-05-10T00:00:00.000Z",
+      "wallet_address": "0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD",
+      "rewards": [
+        { "title": "Supporter", "description": "Early supporter badge", "currency": "ETH", "amount": 0.0085 },
+        { "title": "Merchant Starter", "description": "1 month gateway + docs", "currency": "ETH", "amount": 0.0407 },
+        { "title": "Merchant Pro", "description": "6 months + support", "currency": "ETH", "amount": 0.2037 }
+      ],
+      "story": "Small businesses are the heartbeat of communities, yet many of them operate under systems that were never designed for their reality—slow settlements, unclear fees, and tools that feel built for corporations, not local merchants. ChainPay began with one goal: make modern digital payments simple, transparent, and accessible for everyday businesses.\n\nOur mission is to provide a Web3 merchant gateway that delivers instant receipts, clear fee visibility, and straightforward integration. Whether it’s a boutique store, a café, or a growing online shop, ChainPay helps owners accept crypto payments with confidence—without needing a full technical team.\n\nThis project matters because financial tools shape opportunity. When merchants can receive payments smoothly and understand exactly what’s happening at checkout, they gain control over their cash flow and can invest energy back into what matters: customers, products, and service.\n\nWe’re building ChainPay as infrastructure for trust—clean UI, reliable confirmations, and human-friendly documentation that lowers the barrier to entry. Our vision is a world where small businesses can compete globally while staying rooted locally.\n\nIf you believe commerce should be fair, transparent, and open to everyone, stand with us. Share the project, join the community, and help us bring better payment experiences to the businesses that keep cities alive.",
+      "location": "Dubai, UAE",
+      "main_category": "Blockchain",
+      "optional_category": "Payments",
+      "project_type": "Company",
+      "created_at": "2025-02-05T10:00:00.000Z",
+      "updated_at": "2025-02-05T10:00:00.000Z"
+    },
+    {
+      "title": "ForgeID Decentralized Identity",
+      "description": "A decentralized identity toolkit for secure login and verifiable credentials.",
+      "image": "AI_PROMPT: Digital identity concept, secure ID card hologram, blockchain nodes, lock icon, futuristic clean style, 4k",
+      "currency": "ETH",
+      "target": 27.1558,
+      "amount_raised": 5.2958,
+      "owner_id": "64f000000000000000000002",
+      "status": "OPEN",
+      "start_date": "2025-02-12T00:00:00.000Z",
+      "end_date": "2025-05-25T00:00:00.000Z",
+      "wallet_address": "0x5A52E96BAcdaBb82fd05763E25335261B270Efcb",
+      "rewards": [
+        { "title": "Community", "description": "Updates + Discord role", "currency": "ETH", "amount": 0.0051 },
+        { "title": "Developer Pack", "description": "SDK early access", "currency": "ETH", "amount": 0.0272 },
+        { "title": "Org Pilot", "description": "Pilot for one organization", "currency": "ETH", "amount": 0.3394 }
+      ],
+      "story": "Passwords were meant to protect us, but today they often do the opposite—creating friction for users and risk for organizations. Data breaches, credential stuffing, and endless resets have become normal. ForgeID exists because identity should be something you own, not something you borrow from dozens of platforms.\n\nOur mission is to build a decentralized identity toolkit that enables secure login and verifiable credentials without sacrificing usability. ForgeID helps developers and organizations adopt a modern identity layer where users can prove who they are (or what they’re eligible for) without exposing unnecessary personal data.\n\nThis matters far beyond convenience. When identity is safer and more private by design, communities benefit: fewer account takeovers, less fraud, and stronger trust in online services—from education and healthcare to finance and public services.\n\nWe’re building ForgeID as a practical bridge between Web2 and Web3: clean SDKs, strong documentation, and an approach that respects real-world constraints. Our vision is a future where people carry portable credentials that work across services, while privacy remains the default.\n\nIf you believe the internet can be safer without becoming more restrictive, join us. Follow the roadmap, test the toolkit, and help shape identity infrastructure that empowers people—not platforms.",
+      "location": "Toronto, Canada",
+      "main_category": "Blockchain",
+      "optional_category": "Identity",
+      "project_type": "Company",
+      "created_at": "2025-02-12T10:00:00.000Z",
+      "updated_at": "2025-02-12T10:00:00.000Z"
+    },
+    {
+      "title": "AuditTrail Smart Contract Monitor",
+      "description": "A tool that monitors on-chain activity, alerts suspicious transactions, and generates audit reports.",
+      "image": "AI_PROMPT: On-chain monitoring dashboard, blockchain transaction graph, alert notifications, dark UI, cybersecurity vibe, 4k",
+      "currency": "ETH",
+      "target": 16.9736,
+      "amount_raised": 3.0211,
+      "owner_id": "64f000000000000000000002",
+      "status": "OPEN",
+      "start_date": "2025-02-18T00:00:00.000Z",
+      "end_date": "2025-04-28T00:00:00.000Z",
+      "wallet_address": "0x281055afc982d96Fab65b3a49cBf0dD1fA2b2C3d",
+      "rewards": [
+        { "title": "Supporter", "description": "Updates + credits", "currency": "ETH", "amount": 0.0034 },
+        { "title": "Pro Alerts", "description": "3 months alerts package", "currency": "ETH", "amount": 0.0509 },
+        { "title": "Audit Report", "description": "Custom report for 1 contract", "currency": "ETH", "amount": 0.2377 }
+      ],
+      "story": "Web3 moves fast—sometimes faster than people can notice what’s going wrong. Smart contracts can power incredible products, but a single overlooked behavior can turn into major risk. AuditTrail was created for builders, teams, and communities who want transparency and early warnings before problems become headlines.\n\nOur mission is to monitor on-chain activity, detect suspicious patterns, and generate clear audit-style reports that teams can act on. Instead of drowning in raw transactions, AuditTrail turns blockchain noise into meaningful signals: anomaly alerts, behavior summaries, and readable explanations.\n\nThis project matters because trust is the foundation of adoption. When users can see that protocols are monitored responsibly and teams receive timely alerts, confidence grows across the ecosystem. Strong monitoring also helps teams improve operations—spotting unusual flows, verifying integrations, and maintaining accountability.\n\nWe’re building AuditTrail with a practical vision: security that’s continuous, not occasional; reporting that’s understandable, not only for experts; and tooling that fits into real workflows. As Web3 expands into everyday services, monitoring becomes a public good.\n\nIf you care about safer decentralized systems and transparent infrastructure, join the movement. Follow the development, share feedback, and help us make trust measurable—one alert and one report at a time.",
+      "location": "Austin, USA",
+      "main_category": "Blockchain",
+      "optional_category": "Security",
+      "project_type": "Company",
+      "created_at": "2025-02-18T10:00:00.000Z",
+      "updated_at": "2025-02-18T10:00:00.000Z"
+    },
+    {
+      "title": "RemoteCare AI Triage",
+      "description": "AI-assisted symptom triage for telemedicine clinics to reduce waiting and improve routing.",
+      "image": "AI_PROMPT: Telemedicine consultation scene, doctor on screen, AI triage checklist overlay, healthcare tech, bright clean style, 4k",
+      "currency": "ETH",
+      "target": 30.5505,
+      "amount_raised": 9.3355,
+      "owner_id": "64f000000000000000000003",
+      "status": "OPEN",
+      "start_date": "2025-02-03T00:00:00.000Z",
+      "end_date": "2025-05-30T00:00:00.000Z",
+      "wallet_address": "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
+      "rewards": [
+        { "title": "Supporter", "description": "Monthly progress updates", "currency": "ETH", "amount": 0.0068 },
+        { "title": "Clinic Beta", "description": "Beta access for one clinic", "currency": "ETH", "amount": 0.0849 },
+        { "title": "Clinic Partner", "description": "Pilot + training", "currency": "ETH", "amount": 0.5091 }
+      ],
+      "story": "When someone feels unwell, time becomes emotional. Waiting rooms, long queues, and uncertainty can turn a manageable problem into anxiety. Telemedicine has opened doors to care, but clinics still face the same bottleneck: triage. RemoteCare AI Triage was created to help clinicians and patients meet faster, with clearer direction from the very first message.\n\nOur mission is to provide AI-assisted symptom triage that supports telemedicine teams—collecting structured symptom information, suggesting urgency levels, and routing patients to the right care path. It’s designed to be explainable, clinic-friendly, and focused on reducing delays, not replacing clinicians.\n\nThis matters because better routing improves outcomes. Patients get to the right provider sooner, staff avoid overload, and clinics can prioritize truly urgent cases. Over time, this improves trust in telehealth, especially for communities where access to in-person care is limited.\n\nWe’re building RemoteCare with a vision of compassionate efficiency: technology that listens carefully, asks the right questions, and helps people feel supported even before the appointment begins.\n\nIf you believe healthcare should be easier to access and calmer to navigate, join us. Share the mission, participate in pilots, and help us build triage tools that respect patients and empower clinical teams.",
+      "location": "Stockholm, Sweden",
+      "main_category": "Health",
+      "optional_category": "AI",
+      "project_type": "Company",
+      "created_at": "2025-02-03T10:00:00.000Z",
+      "updated_at": "2025-02-03T10:00:00.000Z"
+    },
+    {
+      "title": "MediLedger Secure Records",
+      "description": "Secure medical record sharing with encryption, audit logs, and patient consent controls.",
+      "image": "AI_PROMPT: Secure medical records concept, encrypted data vault, hospital icon, consent dashboard UI, clean healthcare style, 4k",
+      "currency": "ETH",
+      "target": 23.7611,
+      "amount_raised": 5.0245,
+      "owner_id": "64f000000000000000000003",
+      "status": "OPEN",
+      "start_date": "2025-02-11T00:00:00.000Z",
+      "end_date": "2025-05-05T00:00:00.000Z",
+      "wallet_address": "0x9fBf1F7a6dC3b5bE8c1f6d5cBf8eB2E2d6a0b123",
+      "rewards": [
+        { "title": "Supporter", "description": "Updates + thanks page", "currency": "ETH", "amount": 0.0051 },
+        { "title": "Clinic Starter", "description": "Starter integration docs", "currency": "ETH", "amount": 0.0679 },
+        { "title": "Clinic Pro", "description": "Pilot for one department", "currency": "ETH", "amount": 0.4073 }
+      ],
+      "story": "Medical data is deeply personal, yet it often moves through systems that were built for paperwork, not privacy. Patients repeat their history, clinics struggle to share files securely, and consent can feel like a checkbox rather than real control. MediLedger was created to fix that—by making record sharing secure, auditable, and truly patient-centered.\n\nOur mission is to enable encrypted record exchange with clear consent controls and full audit logs. MediLedger helps healthcare providers share the right information with the right people at the right time—while giving patients visibility into access and confidence that their data is protected.\n\nThis project matters because secure sharing saves time and improves care coordination. When clinicians can access accurate records quickly, they make better decisions. When patients feel in control, trust grows—and trust is essential for modern healthcare.\n\nWe’re building MediLedger with a practical approach: strong encryption, clear interfaces, and compliance-aware design that fits real clinic workflows. Our vision is a future where consent is dynamic, access is transparent, and healthcare systems collaborate safely across borders and organizations.\n\nIf you believe privacy and healthcare quality should grow together, join us. Share the mission, follow the progress, and help us build infrastructure that respects every patient’s story.",
+      "location": "Zurich, Switzerland",
+      "main_category": "Health",
+      "optional_category": "Data Security",
+      "project_type": "Company",
+      "created_at": "2025-02-11T10:00:00.000Z",
+      "updated_at": "2025-02-11T10:00:00.000Z"
+    },
+    {
+      "title": "PulseTrack Wearable Insights",
+      "description": "A wearable analytics platform that turns heart-rate and sleep data into actionable health insights.",
+      "image": "AI_PROMPT: Smart wearable watch with health graphs, heart-rate and sleep analytics, modern UI overlays, realistic product shot, 4k",
+      "currency": "ETH",
+      "target": 20.3743,
+      "amount_raised": 3.3605,
+      "owner_id": "64f000000000000000000003",
+      "status": "OPEN",
+      "start_date": "2025-02-20T00:00:00.000Z",
+      "end_date": "2025-04-25T00:00:00.000Z",
+      "wallet_address": "0x4E83362442B8d1beC281594cEa3050c8EB01311C",
+      "rewards": [
+        { "title": "Supporter", "description": "Updates + community access", "currency": "ETH", "amount": 0.0034 },
+        { "title": "Early App Access", "description": "Beta app access", "currency": "ETH", "amount": 0.0204 },
+        { "title": "Partner Pack", "description": "Integration support pack", "currency": "ETH", "amount": 0.1697 }
+      ],
+      "story": "Wearables have made it easy to collect health data—but collecting data is not the same as understanding it. People see graphs and numbers, yet still wonder: \"Am I recovering well?\" \"Why am I tired?\" \"What should I change?\" PulseTrack Wearable Insights exists to turn raw metrics into practical guidance that people can actually use.\n\nOur mission is to build an analytics platform that transforms heart-rate and sleep signals into clear, actionable insights. PulseTrack highlights patterns, explains what they mean, and offers gentle recommendations that support healthier routines—without overwhelming users with jargon.\n\nThis project matters because better understanding leads to better habits. When people can interpret their data, they make smarter choices about training, rest, stress, and daily rhythm. Over time, this can improve wellbeing, reduce burnout, and help communities become more health-aware.\n\nWe’re building PulseTrack with a human-first vision: clarity over complexity, consistency over hype, and insights that adapt to real life. Whether you’re an athlete chasing performance or someone simply trying to sleep better, the goal is the same: feel better with confidence.\n\nIf you believe health technology should empower—not confuse—join us. Share feedback, follow updates, and help us shape a platform that makes everyday health data genuinely helpful.",
+      "location": "Barcelona, Spain",
+      "main_category": "Health",
+      "optional_category": "Wearables",
+      "project_type": "Company",
+      "created_at": "2025-02-20T10:00:00.000Z",
+      "updated_at": "2025-02-20T10:00:00.000Z"
+    },
+    {
+      "title": "SmartMeter Home Energy Kit",
+      "description": "IoT energy kit that monitors appliances and helps households reduce electricity usage.",
+      "image": "AI_PROMPT: Smart home energy monitoring, IoT sensors, home dashboard UI, eco-friendly vibe, bright modern style, 4k",
+      "currency": "ETH",
+      "target": 16.9736,
+      "amount_raised": 4.4809,
+      "owner_id": "64f000000000000000000004",
+      "status": "OPEN",
+      "start_date": "2025-02-06T00:00:00.000Z",
+      "end_date": "2025-05-15T00:00:00.000Z",
+      "wallet_address": "0x1111111111111111111111111111111111111111",
+      "rewards": [
+        { "title": "Supporter", "description": "Updates + early bird news", "currency": "ETH", "amount": 0.0034 },
+        { "title": "Starter Kit Discount", "description": "Discount code for kit", "currency": "ETH", "amount": 0.0272 },
+        { "title": "Full Kit", "description": "One complete kit package", "currency": "ETH", "amount": 0.0849 }
+      ],
+      "story": "Energy costs keep rising, and many households feel powerless—not because they don’t care, but because they can’t see what’s actually happening inside their own home. Which appliance is driving the bill? When does consumption spike? What small change would matter most? SmartMeter Home Energy Kit was created to turn guesswork into clarity.\n\nOur mission is to help households monitor energy usage at the appliance level and translate that data into simple actions that reduce waste. Using IoT sensors and a friendly dashboard, SmartMeter reveals patterns, highlights inefficiencies, and suggests practical steps—from smarter scheduling to identifying energy-hungry devices.\n\nThis project matters because millions of small savings add up to huge impact. Lower usage means lower emissions, less strain on the grid, and more resilient communities. It also helps families feel in control—especially during seasons when energy bills can become stressful.\n\nWe’re building SmartMeter with an accessible vision: easy setup, clear insights, and recommendations that fit real lives. Sustainability shouldn’t require expertise; it should be built into the tools people use every day.\n\nIf you believe greener living should be simple and measurable, join us. Share the project, follow our progress, and help us bring energy transparency to more homes—one household at a time.",
+      "location": "Copenhagen, Denmark",
+      "main_category": "IoT",
+      "optional_category": "GreenTech",
+      "project_type": "Company",
+      "created_at": "2025-02-06T10:00:00.000Z",
+      "updated_at": "2025-02-06T10:00:00.000Z"
+    },
+    {
+      "title": "GreenGrid Building Automation",
+      "description": "Sensors + analytics for optimizing HVAC and lighting in commercial buildings.",
+      "image": "AI_PROMPT: Modern office building, IoT sensors, HVAC analytics dashboard overlay, green energy concept, 4k",
+      "currency": "ETH",
+      "target": 28.8561,
+      "amount_raised": 6.9575,
+      "owner_id": "64f000000000000000000004",
+      "status": "OPEN",
+      "start_date": "2025-02-13T00:00:00.000Z",
+      "end_date": "2025-06-01T00:00:00.000Z",
+      "wallet_address": "0x2222222222222222222222222222222222222222",
+      "rewards": [
+        { "title": "Supporter", "description": "Monthly updates", "currency": "ETH", "amount": 0.0068 },
+        { "title": "Building Starter", "description": "Pilot dashboard setup", "currency": "ETH", "amount": 0.1358 },
+        { "title": "Enterprise Pilot", "description": "Full pilot for one floor", "currency": "ETH", "amount": 0.8484 }
+      ],
+      "story": "Commercial buildings are some of the largest energy consumers in modern cities, yet much of that energy is wasted quietly—lights running when spaces are empty, HVAC systems overworking, and inefficiencies hidden behind complex controls. GreenGrid was created to bring intelligence and accountability to the places where people work, learn, and collaborate.\n\nOur mission is to combine sensors and analytics to optimize HVAC and lighting in real time. GreenGrid learns how a building is used throughout the day, detects waste patterns, and recommends adjustments that reduce energy consumption while maintaining comfort.\n\nThis project matters because sustainability is not only about building new green structures—it’s also about improving what already exists. When buildings operate efficiently, organizations reduce their footprint and create healthier indoor environments. Over time, these savings and improvements ripple outward: lower citywide demand, fewer emissions, and stronger resilience during peak seasons.\n\nWe’re building GreenGrid with a practical vision: deployable tools, clear dashboards, and automation that facility teams can trust. The goal is not to complicate operations, but to simplify decision-making with real data.\n\nIf you believe smarter buildings can lead to smarter cities, join us. Share the mission, connect with our pilots, and help us transform everyday spaces into responsible, efficient environments.",
+      "location": "Vienna, Austria",
+      "main_category": "IoT",
+      "optional_category": "Sustainability",
+      "project_type": "Company",
+      "created_at": "2025-02-13T10:00:00.000Z",
+      "updated_at": "2025-02-13T10:00:00.000Z"
+    },
+    {
+      "title": "GridSense Predictive Maintenance",
+      "description": "Predictive maintenance for energy equipment using IoT vibration and temperature monitoring.",
+      "image": "AI_PROMPT: Industrial maintenance scene, IoT sensors on machinery, predictive analytics graphs, clean tech style, 4k",
+      "currency": "ETH",
+      "target": 21.0522,
+      "amount_raised": 2.9532,
+      "owner_id": "64f000000000000000000004",
+      "status": "OPEN",
+      "start_date": "2025-02-22T00:00:00.000Z",
+      "end_date": "2025-05-02T00:00:00.000Z",
+      "wallet_address": "0x3333333333333333333333333333333333333333",
+      "rewards": [
+        { "title": "Supporter", "description": "Updates + credits", "currency": "ETH", "amount": 0.0034 },
+        { "title": "Pilot Sensor Pack", "description": "Pilot sensors for one device", "currency": "ETH", "amount": 0.1018 },
+        { "title": "Maintenance Partner", "description": "Pilot + training", "currency": "ETH", "amount": 0.6110 }
+      ],
+      "story": "Unexpected equipment failure can knock out critical services, disrupt operations, and create safety risks—especially in energy environments where uptime matters. Too often, maintenance is reactive: problems are discovered when it’s already too late. GridSense was built to shift the story from surprise breakdowns to predictable reliability.\n\nOur mission is to use IoT vibration and temperature monitoring to detect early warning signals and predict failures before they happen. GridSense turns sensor readings into clear maintenance insights, helping teams plan repairs, reduce downtime, and protect both equipment and people.\n\nThis project matters because reliability affects entire communities. When energy equipment stays healthy, services remain stable, costs of emergency repairs drop, and resources are used more efficiently. Preventing failures also reduces waste—less damaged hardware, fewer rushed replacements, and safer working conditions.\n\nWe’re building GridSense with a vision of practical intelligence: easy-to-deploy sensors, understandable dashboards, and alerts that teams trust enough to act on. Predictive maintenance shouldn’t be reserved for the biggest enterprises—it should be available wherever infrastructure matters.\n\nIf you believe prevention is better than crisis, join us. Follow our progress, share the project with operators and engineers, and help us build a future where maintenance is smart, calm, and proactive.",
+      "location": "Oslo, Norway",
+      "main_category": "IoT",
+      "optional_category": "Industrial",
+      "project_type": "Company",
+      "created_at": "2025-02-22T10:00:00.000Z",
+      "updated_at": "2025-02-22T10:00:00.000Z"
+    },
+    {
+      "title": "ShieldWatch Threat Detection",
+      "description": "AI-assisted network threat detection for SMEs with easy setup and weekly security reports.",
+      "image": "AI_PROMPT: Cybersecurity SOC dashboard, network map, threat alerts, dark theme, neon highlights, professional, 4k",
+      "currency": "ETH",
+      "target": 26.4778,
+      "amount_raised": 6.4517,
+      "owner_id": "64f000000000000000000005",
+      "status": "OPEN",
+      "start_date": "2025-02-04T00:00:00.000Z",
+      "end_date": "2025-05-20T00:00:00.000Z",
+      "wallet_address": "0x4444444444444444444444444444444444444444",
+      "rewards": [
+        { "title": "Supporter", "description": "Security newsletter + updates", "currency": "ETH", "amount": 0.0051 },
+        { "title": "SME Starter", "description": "1 month monitoring plan", "currency": "ETH", "amount": 0.0679 },
+        { "title": "SME Pro", "description": "6 months + onboarding", "currency": "ETH", "amount": 0.4073 }
+      ],
+      "story": "Small and medium-sized businesses keep the economy moving, yet they’re often expected to defend themselves with the security resources of a large enterprise. Attacks don’t discriminate—SMEs are targeted precisely because they’re busy, understaffed, and under-protected. ShieldWatch exists to bring stronger security to the organizations that need it most.\n\nOur mission is to deliver AI-assisted network threat detection with easy setup and clear weekly reports. ShieldWatch helps teams spot suspicious activity early, understand what it means, and take action without requiring a full-time security operations center.\n\nThis project matters because cybersecurity is community safety. When local businesses and startups are protected, employees keep their jobs, customers keep their trust, and digital services remain reliable. Better detection also reduces panic—teams get guided insights instead of overwhelming alerts.\n\nWe’re building ShieldWatch with a vision of security that’s approachable: simple onboarding, meaningful signals, and reports written for humans. The goal is to help teams improve over time—building healthy habits and strong defenses without slowing down growth.\n\nIf you believe cybersecurity should be accessible, not exclusive, join us. Share the mission, follow our progress, and help us protect the businesses that power real communities.",
+      "location": "Prague, Czech Republic",
+      "main_category": "Cybersecurity",
+      "optional_category": "Threat Detection",
+      "project_type": "Company",
+      "created_at": "2025-02-04T10:00:00.000Z",
+      "updated_at": "2025-02-04T10:00:00.000Z"
+    },
+    {
+      "title": "PhishProof Training Platform",
+      "description": "Interactive phishing simulation and training for teams with progress tracking.",
+      "image": "AI_PROMPT: Office team training, phishing email simulation UI, progress charts, friendly cyber education vibe, 4k",
+      "currency": "ETH",
+      "target": 13.5789,
+      "amount_raised": 2.5800,
+      "owner_id": "64f000000000000000000005",
+      "status": "OPEN",
+      "start_date": "2025-02-16T00:00:00.000Z",
+      "end_date": "2025-04-18T00:00:00.000Z",
+      "wallet_address": "0x5555555555555555555555555555555555555555",
+      "rewards": [
+        { "title": "Supporter", "description": "Updates + thanks", "currency": "ETH", "amount": 0.0034 },
+        { "title": "Team Pack", "description": "Training for up to 10 users", "currency": "ETH", "amount": 0.0407 },
+        { "title": "Org Pack", "description": "Training for up to 100 users", "currency": "ETH", "amount": 0.2716 }
+      ],
+      "story": "Most breaches don’t start with a supercomputer—they start with a human moment: a rushed click, a convincing message, a request that looks urgent. People aren’t the problem; they’re the first line of defense. PhishProof was created to train teams in a way that’s practical, measurable, and respectful.\n\nOur mission is to provide interactive phishing simulations and training that helps teams recognize threats before damage is done. PhishProof offers realistic scenarios, progress tracking, and clear learning paths that build confidence over time.\n\nThis project matters because awareness saves organizations—especially smaller teams without dedicated security staff. When employees learn to spot patterns, report suspicious emails, and pause before acting, risk drops dramatically. Training also builds a healthier culture: security becomes a shared habit, not a blame game.\n\nWe’re building PhishProof with a simple vision: education that feels supportive, not scary; progress that’s visible, not vague; and training that fits into busy workdays.\n\nIf you believe better security starts with better learning, join us. Share the platform with teams who need it, follow our updates, and help us make cyber education engaging, modern, and effective for everyone.",
+      "location": "Warsaw, Poland",
+      "main_category": "Cybersecurity",
+      "optional_category": "Training",
+      "project_type": "Company",
+      "created_at": "2025-02-16T10:00:00.000Z",
+      "updated_at": "2025-02-16T10:00:00.000Z"
+    },
+    {
+      "title": "IncidentFlow Response Toolkit",
+      "description": "Incident response playbooks + automation scripts for faster containment and reporting.",
+      "image": "AI_PROMPT: Incident response concept, checklist boards, automation scripts, cyber operations room, clean dramatic lighting, 4k",
+      "currency": "ETH",
+      "target": 17.6533,
+      "amount_raised": 4.0055,
+      "owner_id": "64f000000000000000000005",
+      "status": "OPEN",
+      "start_date": "2025-02-24T00:00:00.000Z",
+      "end_date": "2025-05-12T00:00:00.000Z",
+      "wallet_address": "0x6666666666666666666666666666666666666666",
+      "rewards": [
+        { "title": "Supporter", "description": "Updates", "currency": "ETH", "amount": 0.0034 },
+        { "title": "Toolkit Access", "description": "Access to playbooks + templates", "currency": "ETH", "amount": 0.0306 },
+        { "title": "Team Workshop", "description": "Live response workshop", "currency": "ETH", "amount": 0.2037 }
+      ],
+      "story": "In a security incident, minutes feel like hours. Teams scramble to confirm what happened, contain the threat, communicate clearly, and document everything—often under pressure and with incomplete information. IncidentFlow was built to bring structure and speed to the moments when chaos is most costly.\n\nOur mission is to provide incident response playbooks and automation scripts that help teams contain issues faster and produce clear reporting. IncidentFlow offers step-by-step workflows, checklists, and reusable templates that turn best practices into action.\n\nThis project matters because response quality directly reduces harm. Faster containment protects customer data, limits downtime, and reduces recovery time. Strong reporting helps organizations learn from incidents and improve resilience instead of repeating the same mistakes.\n\nWe’re building IncidentFlow with a vision of operational clarity: tools that are practical, tested, and easy to adopt for teams of all sizes. Whether you’re a startup handling your first major incident or a growing business formalizing security operations, the goal is the same—respond with confidence.\n\nIf you believe preparedness should be simple and accessible, join us. Share the toolkit with teams who need it, follow our progress, and help us make incident response calmer, faster, and more effective across the digital world.",
+      "location": "Helsinki, Finland",
+      "main_category": "Cybersecurity",
+      "optional_category": "Incident Response",
+      "project_type": "Company",
+      "created_at": "2025-02-24T10:00:00.000Z",
+      "updated_at": "2025-02-24T10:00:00.000Z"
+    },
+    {
+      "title": "FraudLens Real-time Detection",
+      "description": "Real-time fraud scoring for fintech transactions with explainable alerts and dashboards.",
+      "image": "AI_PROMPT: Fintech fraud detection dashboard, transaction streams, risk scoring, clean UI, modern office scene, 4k",
+      "currency": "ETH",
+      "target": 32.259,
+      "amount_raised": 10.5229,
+      "owner_id": "64f000000000000000000006",
+      "status": "OPEN",
+      "start_date": "2025-02-02T00:00:00.000Z",
+      "end_date": "2025-06-01T00:00:00.000Z",
+      "wallet_address": "0x7777777777777777777777777777777777777777",
+      "rewards": [
+        { "title": "Supporter", "description": "Updates + credits", "currency": "ETH", "amount": 0.0068 },
+        { "title": "Startup Pack", "description": "3 months dashboard access", "currency": "ETH", "amount": 0.0849 },
+        { "title": "Enterprise Pilot", "description": "Pilot + onboarding", "currency": "ETH", "amount": 0.6790 }
+      ],
+      "story": "Fraud isn’t just a financial loss—it’s a trust crisis. When customers see unauthorized activity, they lose confidence in the systems meant to protect them. Fintech moves quickly, and fraudsters move faster. FraudLens was created to help teams stay ahead with detection that’s both real-time and understandable.\n\nOur mission is to provide real-time fraud scoring with explainable alerts and dashboards. FraudLens analyzes transaction streams, detects suspicious behavior patterns, and presents risk signals in a way analysts can act on—without drowning in false positives.\n\nThis project matters because speed and clarity reduce harm. When fraud is flagged early, teams can respond faster, customers feel safer, and companies protect their reputation. Explainability also improves decision-making: teams learn why something is risky, not just that it is.\n\nWe’re building FraudLens with a vision of responsible AI: transparent signals, practical workflows, and dashboards that help teams improve continuously. As digital payments expand, robust fraud detection becomes essential infrastructure.\n\nIf you believe financial innovation should be matched by stronger protection, join us. Follow our development, share insight from your industry, and help us build tools that keep trust at the center of modern finance.",
+      "location": "Singapore",
+      "main_category": "FinTech",
+      "optional_category": "Fraud Prevention",
+      "project_type": "Company",
+      "created_at": "2025-02-02T10:00:00.000Z",
+      "updated_at": "2025-02-02T10:00:00.000Z"
+    },
+    {
+      "title": "PulseBudget Smart Finance App",
+      "description": "Personal finance app with smart budgeting, goals, and spending insights using ML categorization.",
+      "image": "AI_PROMPT: Personal finance mobile app UI, budget charts, savings goals, clean modern fintech style, bright minimal, 4k",
+      "currency": "ETH",
+      "target": 15.2838,
+      "amount_raised": 3.3605,
+      "owner_id": "64f000000000000000000006",
+      "status": "OPEN",
+      "start_date": "2025-02-14T00:00:00.000Z",
+      "end_date": "2025-04-25T00:00:00.000Z",
+      "wallet_address": "0x8888888888888888888888888888888888888888",
+      "rewards": [
+        { "title": "Supporter", "description": "Updates + early access", "currency": "ETH", "amount": 0.0034 },
+        { "title": "Premium 6 Months", "description": "Premium plan for 6 months", "currency": "ETH", "amount": 0.0204 },
+        { "title": "Lifetime Premium", "description": "Lifetime premium access", "currency": "ETH", "amount": 0.0679 }
+      ],
+      "story": "Money stress is rarely about numbers alone—it’s about uncertainty. People want to save, plan, and feel stable, but they’re often stuck in a cycle of tracking spreadsheets, forgetting categories, and losing sight of goals. PulseBudget was created to make personal finance feel clear, supportive, and achievable.\n\nOur mission is to deliver a smart budgeting app that uses ML categorization to turn transactions into insights, highlight spending patterns, and guide users toward realistic goals. PulseBudget helps people understand where their money goes, what habits matter most, and how to plan the month with confidence.\n\nThis project matters because financial literacy is empowerment. When people can see their behavior clearly and make small adjustments, they build stability over time. Better budgeting reduces stress, supports healthier decisions, and helps families and individuals invest in what matters—education, wellbeing, and future plans.\n\nWe’re building PulseBudget with a human-first vision: simple interfaces, meaningful suggestions, and guidance that respects each person’s reality. The goal is progress, not perfection.\n\nIf you believe everyone deserves tools that make financial planning easier and more compassionate, join us. Follow the journey, share feedback, and help us build a finance app that feels like a supportive partner—every day.",
+      "location": "Sydney, Australia",
+      "main_category": "FinTech",
+      "optional_category": "Personal Finance",
+      "project_type": "Company",
+      "created_at": "2025-02-14T10:00:00.000Z",
+      "updated_at": "2025-02-14T10:00:00.000Z"
+    },
+    {
+      "title": "InvoiceFlow SME Billing Suite",
+      "description": "Billing + invoicing suite for SMEs with smart reminders and analytics.",
+      "image": "AI_PROMPT: Invoicing dashboard on laptop, payment status cards, analytics charts, clean SaaS style, 4k",
+      "currency": "ETH",
+      "target": 12.9011,
+      "amount_raised": 2.1729,
+      "owner_id": "64f000000000000000000006",
+      "status": "OPEN",
+      "start_date": "2025-02-23T00:00:00.000Z",
+      "end_date": "2025-04-30T00:00:00.000Z",
+      "wallet_address": "0x9999999999999999999999999999999999999999",
+      "rewards": [
+        { "title": "Supporter", "description": "Updates", "currency": "ETH", "amount": 0.0034 },
+        { "title": "SME Starter", "description": "3 months access", "currency": "ETH", "amount": 0.0272 },
+        { "title": "SME Pro", "description": "1 year access", "currency": "ETH", "amount": 0.0815 }
+      ],
+      "story": "For small businesses, time is the most limited resource. Yet many SMEs spend countless hours chasing invoices, sending reminders, and trying to understand cash flow through scattered tools. InvoiceFlow was created to give business owners their time back—and bring clarity to daily operations.\n\nOur mission is to build a billing and invoicing suite that automates reminders, tracks payment status, and turns billing activity into actionable analytics. InvoiceFlow helps SMEs stay organized, follow up consistently, and understand revenue patterns without needing a finance department.\n\nThis project matters because healthy cash flow keeps businesses alive. When invoices are managed efficiently, teams can focus on customers, product quality, and growth. Better visibility also reduces stress—owners know what’s paid, what’s pending, and what needs attention.\n\nWe’re building InvoiceFlow with a practical vision: clean dashboards, smart automation, and tools that fit real-world workflows. The goal is not to add complexity, but to remove friction.\n\nIf you believe small businesses deserve tools that feel powerful yet simple, join us. Share the project with founders who need it, follow our updates, and help us build an invoicing experience that supports the people building our communities.",
+      "location": "Dublin, Ireland",
+      "main_category": "FinTech",
+      "optional_category": "Business Tools",
+      "project_type": "Company",
+      "created_at": "2025-02-23T10:00:00.000Z",
+      "updated_at": "2025-02-23T10:00:00.000Z"
+    }
+  ],
+ 
+"Comments": [
+  {
+    "project_title": "Smart Traffic AI System",
+    "comments": [
+      { "username": "SaraK", "content": "Love the smart city focus. Any pilot city planned?", "created_at": "2025-02-08T12:00:00.000Z" },
+      { "username": "Hadi", "content": "How do you handle privacy with camera streams?", "created_at": "2025-02-10T16:30:00.000Z" },
+      { "username": "TechBacker", "content": "Supported! Please post weekly progress updates.", "created_at": "2025-02-12T09:15:00.000Z" }
+    ]
+  },
+  {
+    "project_title": "VisionGuard Factory Inspection",
+    "comments": [
+      { "username": "Mona", "content": "Great for manufacturing. What defect types are supported?", "created_at": "2025-02-12T11:00:00.000Z" },
+      { "username": "IndustrialGuy", "content": "Interested in a demo. Any API docs?", "created_at": "2025-02-15T13:20:00.000Z" },
+      { "username": "Layth", "content": "This can save a lot of cost. Backed!", "created_at": "2025-02-18T18:05:00.000Z" }
+    ]
+  },
+  {
+    "project_title": "NeuraAssist Customer AI Agent",
+    "comments": [
+      { "username": "Rana", "content": "Multilingual support is key. Does it support Arabic?", "created_at": "2025-02-18T10:40:00.000Z" },
+      { "username": "SupportLead", "content": "Can it integrate with Zendesk or Freshdesk?", "created_at": "2025-02-20T14:10:00.000Z" },
+      { "username": "OmarM", "content": "Nice! Waiting for beta.", "created_at": "2025-02-22T08:55:00.000Z" }
+    ]
+  },
+
+  {
+    "project_title": "ChainPay Merchant Gateway",
+    "comments": [
+      { "username": "Nour", "content": "Fees transparency is awesome. What chains are supported?", "created_at": "2025-02-09T15:00:00.000Z" },
+      { "username": "ShopOwner", "content": "Can I get a plugin for Shopify?", "created_at": "2025-02-13T12:05:00.000Z" },
+      { "username": "CryptoFan", "content": "Backed! Please add stablecoin support.", "created_at": "2025-02-17T17:30:00.000Z" }
+    ]
+  },
+  {
+    "project_title": "ForgeID Decentralized Identity",
+    "comments": [
+      { "username": "Yazan", "content": "This is needed. Any standards like DID/VC supported?", "created_at": "2025-02-14T10:25:00.000Z" },
+      { "username": "DevAli", "content": "Would love SDK access early.", "created_at": "2025-02-18T19:10:00.000Z" },
+      { "username": "Nadia", "content": "How do you handle recovery if user loses keys?", "created_at": "2025-02-21T09:45:00.000Z" }
+    ]
+  },
+  {
+    "project_title": "AuditTrail Smart Contract Monitor",
+    "comments": [
+      { "username": "SecurityDude", "content": "Alerts look useful. Does it detect sandwich attacks?", "created_at": "2025-02-20T12:00:00.000Z" },
+      { "username": "Hiba", "content": "Can you export reports as PDF?", "created_at": "2025-02-22T16:40:00.000Z" },
+      { "username": "BackerX", "content": "Supported. Real transparency tool.", "created_at": "2025-02-24T08:10:00.000Z" }
+    ]
+  },
+
+  {
+    "project_title": "RemoteCare AI Triage",
+    "comments": [
+      { "username": "DoctorA", "content": "How do you ensure medical safety and disclaimers?", "created_at": "2025-02-08T10:00:00.000Z" },
+      { "username": "Lina", "content": "Can it route based on urgency levels?", "created_at": "2025-02-12T15:30:00.000Z" },
+      { "username": "Supporter1", "content": "Amazing! Backed.", "created_at": "2025-02-18T09:05:00.000Z" }
+    ]
+  },
+  {
+    "project_title": "MediLedger Secure Records",
+    "comments": [
+      { "username": "DataGuy", "content": "Encryption model? Is it end-to-end?", "created_at": "2025-02-13T13:00:00.000Z" },
+      { "username": "ClinicAdmin", "content": "Any compliance plan like GDPR/HIPAA?", "created_at": "2025-02-16T11:40:00.000Z" },
+      { "username": "Mariam", "content": "Love patient consent focus.", "created_at": "2025-02-19T18:20:00.000Z" }
+    ]
+  },
+  {
+    "project_title": "PulseTrack Wearable Insights",
+    "comments": [
+      { "username": "FitnessPro", "content": "Can it integrate with Apple Health / Google Fit?", "created_at": "2025-02-22T09:00:00.000Z" },
+      { "username": "Hassan", "content": "Would love a stress-score feature.", "created_at": "2025-02-24T12:50:00.000Z" },
+      { "username": "BackerZ", "content": "Backed. Great design idea.", "created_at": "2025-02-25T07:45:00.000Z" }
+    ]
+  },
+
+  {
+    "project_title": "SmartMeter Home Energy Kit",
+    "comments": [
+      { "username": "Ahmad", "content": "Does it work with solar systems too?", "created_at": "2025-02-10T14:00:00.000Z" },
+      { "username": "EcoUser", "content": "Nice! Any mobile app included?", "created_at": "2025-02-12T20:10:00.000Z" },
+      { "username": "Noura", "content": "Supported. Energy savings matter.", "created_at": "2025-02-15T09:30:00.000Z" }
+    ]
+  },
+  {
+    "project_title": "GreenGrid Building Automation",
+    "comments": [
+      { "username": "FacilityManager", "content": "Can it integrate with existing HVAC controllers?", "created_at": "2025-02-16T15:00:00.000Z" },
+      { "username": "Khaled", "content": "Any ROI estimate after deployment?", "created_at": "2025-02-19T10:25:00.000Z" },
+      { "username": "SupporterGreen", "content": "Backed. Clean energy impact!", "created_at": "2025-02-22T18:40:00.000Z" }
+    ]
+  },
+  {
+    "project_title": "GridSense Predictive Maintenance",
+    "comments": [
+      { "username": "EngineerSam", "content": "Which sensors are used for vibration analysis?", "created_at": "2025-02-24T13:00:00.000Z" },
+      { "username": "Rashid", "content": "Can it alert on mobile in real-time?", "created_at": "2025-02-25T16:10:00.000Z" },
+      { "username": "BackerA", "content": "Supported. Downtime is expensive.", "created_at": "2025-02-26T09:00:00.000Z" }
+    ]
+  },
+
+  {
+    "project_title": "ShieldWatch Threat Detection",
+    "comments": [
+      { "username": "SMEOwner", "content": "Is setup simple for non-technical teams?", "created_at": "2025-02-06T10:00:00.000Z" },
+      { "username": "ITAdmin", "content": "Does it support Windows event logs?", "created_at": "2025-02-10T14:30:00.000Z" },
+      { "username": "Dima", "content": "Backed. SMEs need this.", "created_at": "2025-02-14T08:20:00.000Z" }
+    ]
+  },
+  {
+    "project_title": "PhishProof Training Platform",
+    "comments": [
+      { "username": "HRTeam", "content": "Love the training approach. Any reporting dashboard?", "created_at": "2025-02-18T12:00:00.000Z" },
+      { "username": "Nabil", "content": "Can we customize templates per department?", "created_at": "2025-02-20T16:45:00.000Z" },
+      { "username": "BackerB", "content": "Supported. Awareness is everything.", "created_at": "2025-02-22T09:10:00.000Z" }
+    ]
+  },
+  {
+    "project_title": "IncidentFlow Response Toolkit",
+    "comments": [
+      { "username": "SecOps", "content": "Do you include playbooks for ransomware cases?", "created_at": "2025-02-25T11:00:00.000Z" },
+      { "username": "Aya", "content": "Would love automation templates for alerts.", "created_at": "2025-02-26T14:20:00.000Z" },
+      { "username": "BackerC", "content": "Backed. Great practical tool.", "created_at": "2025-02-27T08:00:00.000Z" }
+    ]
+  },
+
+  {
+    "project_title": "FraudLens Real-time Detection",
+    "comments": [
+      { "username": "FinTeam", "content": "Explainable alerts is a big plus. Any demo?", "created_at": "2025-02-05T15:10:00.000Z" },
+      { "username": "Ola", "content": "Does it support card and wallet transactions?", "created_at": "2025-02-08T18:00:00.000Z" },
+      { "username": "BackerD", "content": "Supported. Great dashboard idea.", "created_at": "2025-02-12T09:30:00.000Z" }
+    ]
+  },
+  {
+    "project_title": "PulseBudget Smart Finance App",
+    "comments": [
+      { "username": "User1", "content": "Would love Arabic language support.", "created_at": "2025-02-16T11:10:00.000Z" },
+      { "username": "Dana", "content": "Can it connect to bank statements via CSV?", "created_at": "2025-02-18T13:25:00.000Z" },
+      { "username": "BackerE", "content": "Backed. The UI looks clean!", "created_at": "2025-02-19T08:55:00.000Z" }
+    ]
+  },
+  {
+    "project_title": "InvoiceFlow SME Billing Suite",
+    "comments": [
+      { "username": "SMEUser", "content": "Need multi-currency support. Planned?", "created_at": "2025-02-24T10:20:00.000Z" },
+      { "username": "Kareem", "content": "Can it export to PDF and Excel?", "created_at": "2025-02-25T17:00:00.000Z" },
+      { "username": "BackerF", "content": "Supported. This will help a lot.", "created_at": "2025-02-26T09:45:00.000Z" }
+    ]
+  }
+]
+
+}

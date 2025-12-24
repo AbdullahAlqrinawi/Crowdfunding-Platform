@@ -9,6 +9,12 @@ Server/build/
 dist/
 *.log
 
+mongo-data/
+node_modules/
+*.env
+*.log
+
+
 # Environment variables
 .env
 Client/.env

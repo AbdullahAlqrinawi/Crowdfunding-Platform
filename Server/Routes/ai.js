@@ -5,64 +5,105 @@ import dotenv from "dotenv";
 dotenv.config();
 const router = express.Router();
 
-const AVAILABLE_MODELS = [
-  "gemini-2.0-flash-001",
-  "gemini-2.0-flash", 
-  "gemini-pro-latest"
+const COHERE_MODELS = [
+  "command-a-03-2025",
+  "command-r-plus-08-2024",
+  "command-r-08-2024",
 ];
 
-router.post("/generate-story", async (req, res) => {
-  try {
-    const { prompt } = req.body;
+const COHERE_TIMEOUT_MS = 12000; 
 
-    if (!prompt) {
-      return res.status(400).json({ error: true, message: "Prompt is required" });
-    }
+function extractCohereText(data) {
+  return data?.message?.content?.[0]?.text?.trim();
+}
 
-    if (!process.env.GEMINI_API_KEY) {
-      return res.status(500).json({ error: true, message: "AI service configuration error" });
-    }
+function safeAxiosInfo(err) {
+  return { status: err?.response?.status, data: err?.response?.data, message: err?.message };
+}
 
-    let lastError = null;
+/** مهم: خليه يرجّع نص فقط مش JSON */
+function buildStoryPrompt(userPrompt) {
+  return (
+    `Write an inspiring, engaging crowdfunding project story in English.\n` +
+    `Return PLAIN TEXT ONLY (no JSON, no markdown).\n` +
+    `Keep it 300-500 words.\n` +
+    `Include: Background, Mission, Why it matters, Impact, Vision, Call to action.\n\n` +
+    `${String(userPrompt).trim()}`
+  );
+}
 
-    for (const model of AVAILABLE_MODELS) {
-      try {
-        const response = await axios.post(
-          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-          {
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: {
-              temperature: 0.8,
-              maxOutputTokens: 1024,
-            }
+async function callCohereStory({ prompt, apiKey }) {
+  const url = "https://api.cohere.com/v2/chat";
+  let lastErr = null;
+
+  for (const model of COHERE_MODELS) {
+    try {
+      const resp = await axios.post(
+        url,
+        {
+          model,
+          messages: [{ role: "user", content: prompt }],
+          temperature: 0.6,
+          max_tokens: 700, 
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
           },
-          {
-            headers: { "Content-Type": "application/json" },
-            params: { key: process.env.GEMINI_API_KEY },
-            timeout: 30000
-          }
-        );
+          timeout: COHERE_TIMEOUT_MS,
+        }
+      );
 
-        const aiText = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      const text = extractCohereText(resp.data);
+      if (text) return { text, model };
+      lastErr = new Error("Empty Cohere response");
+    } catch (e) {
+      lastErr = e;
+      const info = safeAxiosInfo(e);
+      console.error(`[Cohere FAIL] model=${model} status=${info.status}`, info.data || info.message);
 
-        return res.json({ 
-          error: false, 
-          message: aiText || "No AI response received."
-        });
+      // إذا مفتاح/صلاحيات غلط: لا تكمل
+      if ([401, 403].includes(info.status)) break;
 
-      } catch (error) {
-        lastError = error;
-      }
+      // إذا موديل غير متاح 404: جرّب اللي بعده
+      continue;
     }
+  }
 
-    throw lastError;
+  throw lastErr || new Error("Cohere failed");
+}
 
-  } catch (err) {
-    console.error("AI generation failed:", err.response?.data || err.message);
-    
-    res.status(500).json({ 
-      error: true, 
-      message: "AI service is currently unavailable. Please try again later."
+router.post("/generate-story", async (req, res) => {
+  const rawPrompt = req.body?.prompt;
+  if (!rawPrompt?.trim()) {
+    return res.status(400).json({ error: true, message: "Prompt is required" });
+  }
+
+  const cohereKey = process.env.COHERE_API_KEY;
+  if (!cohereKey) {
+    return res.status(500).json({
+      error: true,
+      message: "Missing COHERE_API_KEY in .env",
+    });
+  }
+
+  try {
+    const prompt = buildStoryPrompt(rawPrompt);
+    const out = await callCohereStory({ prompt, apiKey: cohereKey });
+
+    return res.json({
+      error: false,
+      message: out.text,
+      providerUsed: "cohere",
+      modelUsed: out.model,
+    });
+  } catch (e) {
+    const info = safeAxiosInfo(e);
+    return res.status(502).json({
+      error: true,
+      message: "Cohere failed to generate story right now.",
+      details: info.data || info.message,
     });
   }
 });
